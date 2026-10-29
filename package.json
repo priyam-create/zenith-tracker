@@ -4,8 +4,7 @@
   "description": "Polished, responsive personal productivity and wellness OS featuring atomic habits, nutrition & photo estimation, academic records & GPA calculator.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "echo 'Static assets ready for deployment'"
+    "start": "node server.js"
   },
   "keywords": [
     "productivity",
