@@ -1,20 +1,6 @@
 {
   "name": "zenith-life-os",
   "version": "1.0.0",
-  "description": "Polished, responsive personal productivity and wellness OS featuring atomic habits, nutrition & photo estimation, academic records & GPA calculator.",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "keywords": [
-    "productivity",
-    "wellness",
-    "habit-tracker",
-    "nutrition",
-    "calorie-tracker",
-    "academic-dashboard",
-    "gpa-calculator"
-  ],
-  "author": "Priyam Verma",
-  "license": "MIT"
+  "description": "Polished, responsive personal productivity and wellness OS.",
+  "private": true
 }

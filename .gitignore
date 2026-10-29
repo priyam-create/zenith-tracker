@@ -2,6 +2,9 @@
 node_modules/
 package-lock.json
 
+# Local Node Server & Development
+server.js
+
 # Vercel & Deployment
 .vercel/
 dist/
