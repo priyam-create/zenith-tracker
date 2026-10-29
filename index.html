@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sage">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="description" content="Zenith • Polished Personal Productivity, Atomic Habits, Nutrition and Academic Dashboard.">
+  <meta name="theme-color" content="#0e1315">
+  <title>Zenith • Life & Wellness OS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+</head>
+<body>
+
+  <!-- Particle / Confetti Canvas Container -->
+  <div id="confetti-canvas-container" aria-hidden="true"></div>
+
+  <!-- Toast Notifications Root -->
+  <div id="toast-container" role="region" aria-live="polite" aria-label="Notifications"></div>
+
+  <!-- Application Layout Shell -->
+  <div id="app-shell">
+
+    <!-- Desktop Sidebar Navigation -->
+    <aside id="app-sidebar" aria-label="Main Navigation">
+      <div class="sidebar-brand">
+        <div class="brand-icon-mark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Zenith</h1>
+          <span class="brand-tagline">Life & Wellness OS</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-link active" data-view="overview" id="nav-overview">
+          <span class="nav-icon">📊</span>
+          <span>Overview</span>
+        </button>
+
+        <button class="nav-link" data-view="habits" id="nav-habits">
+          <span class="nav-icon">🔥</span>
+          <span>Habit Tracker</span>
+        </button>
+
+        <button class="nav-link" data-view="nutrition" id="nav-nutrition">
+          <span class="nav-icon">🥗</span>
+          <span>Food & Nutrition</span>
+        </button>
+
+        <button class="nav-link" data-view="academics" id="nav-academics">
+          <span class="nav-icon">🎓</span>
+          <span>Academic Hub</span>
+        </button>
+
+        <button class="nav-link" data-view="settings" id="nav-settings">
+          <span class="nav-icon">⚙️</span>
+          <span>Preferences</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-pill" id="header-profile-btn" role="button" tabindex="0" title="Switch or manage account">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar-img" id="header-user-avatar">
+          <div class="user-info">
+            <span class="user-display-name" id="header-user-name">Alex Chen</span>
+            <span class="user-role-lbl" id="header-user-role">CS & Bioengineering</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Work Area -->
+    <main id="app-main">
+
+      <!-- Top Header Bar -->
+      <header class="top-header-bar">
+        <div class="header-left">
+          <div class="cloud-sync-badge" id="cloud-sync-status">
+            <span class="sync-dot"></span> Cloud Synced
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="btn-header-action" id="btn-toggle-theme" title="Cycle color themes (Sage, Obsidian, Light, Ocean)">
+            <span>🎨</span>
+            <span class="hide-mobile">Theme</span>
+          </button>
+
+          <button class="btn-header-action" id="btn-header-account" onclick="window.zenith.openAuthModal()">
+            <span>👤</span>
+            <span class="hide-mobile">Account</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Persistent Philosophical Motivational Banner -->
+      <section class="motivational-banner glass-panel" id="motivational-banner" aria-label="Daily Motivational Reflection">
+        <div class="quote-header-row">
+          <span class="quote-category">Resilience</span>
+          <button class="btn-spark" id="btn-spark-quote" title="Spark another thought">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Spark Another</span>
+          </button>
+        </div>
+
+        <blockquote class="quote-text">
+          “The impediment to action advances action. What stands in the way becomes the way.”
+        </blockquote>
+        <div class="quote-author">— Marcus Aurelius</div>
+        <p class="quote-context">Turn friction into fuel. Obstacles are not detours; they are the path.</p>
+      </section>
+
+      <!-- View Containers Area -->
+      <div class="views-container">
+
+        <!-- 1. Overview View -->
+        <section id="view-overview" class="app-view active">
+          <div id="overview-view-content"></div>
+        </section>
+
+        <!-- 2. Habits Tracker View -->
+        <section id="view-habits" class="app-view">
+          <div id="habits-view-content"></div>
+        </section>
+
+        <!-- 3. Food & Nutrition View -->
+        <section id="view-nutrition" class="app-view">
+          <div id="nutrition-view-content"></div>
+        </section>
+
+        <!-- 4. Academic Dashboard View -->
+        <section id="view-academics" class="app-view">
+          <div id="academics-view-content"></div>
+        </section>
+
+        <!-- 5. Settings View -->
+        <section id="view-settings" class="app-view">
+          <div id="settings-view-content"></div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav id="mobile-bottom-nav" aria-label="Mobile Navigation">
+      <button class="mobile-nav-btn active" data-view="overview">
+        <span class="m-icon">📊</span>
+        <span>Today</span>
+      </button>
+
+      <button class="mobile-nav-btn" data-view="habits">
+        <span class="m-icon">🔥</span>
+        <span>Habits</span>
+      </button>
+
+      <button class="mobile-nav-btn" data-view="nutrition">
+        <span class="m-icon">🥗</span>
+        <span>Nutrition</span>
+      </button>
+
+      <button class="mobile-nav-btn" data-view="academics">
+        <span class="m-icon">🎓</span>
+        <span>Academics</span>
+      </button>
+
+      <button class="mobile-nav-btn" data-view="settings">
+        <span class="m-icon">⚙️</span>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- ========================================================================
+       Accessible Dialog Modals (<dialog>)
+       ======================================================================== -->
+
+  <!-- 1. Habit Modal -->
+  <dialog id="habit-dialog" aria-labelledby="habit-modal-title">
+    <div class="dialog-header">
+      <h3 id="habit-modal-title">Forge a New Habit</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <form id="habit-form">
+        <div class="form-group">
+          <label for="habit-input-name">Habit Name</label>
+          <input type="text" id="habit-input-name" required placeholder="e.g. 20-Minute Deep Reading" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="habit-input-category">Life Domain</label>
+          <select id="habit-input-category" class="form-select">
+            <option value="Mind & Body">Mind & Body</option>
+            <option value="Productivity">Productivity</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Academics">Academics</option>
+            <option value="Mindfulness">Mindfulness</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="habit-input-icon">Icon Symbol</label>
+          <select id="habit-input-icon" class="form-select">
+            <option value="🧘">🧘 Mindfulness</option>
+            <option value="💻">💻 Deep Work</option>
+            <option value="💧">💧 Hydration</option>
+            <option value="📖">📖 Reading</option>
+            <option value="🏋️">🏋️ Fitness</option>
+            <option value="🌙">🌙 Sleep & Wind-down</option>
+            <option value="🥗">🥗 Clean Eating</option>
+            <option value="✍️">✍️ Journaling</option>
+            <option value="🎯">🎯 Focus</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="habit-input-time">Target Time of Day</label>
+          <input type="text" id="habit-input-time" placeholder="e.g. 08:00 AM or Evening" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="habit-input-freq">Cadence Frequency</label>
+          <select id="habit-input-freq" class="form-select">
+            <option value="Everyday">Everyday</option>
+            <option value="Weekdays">Weekdays</option>
+            <option value="3x / week">3x / week</option>
+            <option value="4x / week">4x / week</option>
+            <option value="Weekends">Weekends only</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="habit-check-today-wrap">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="habit-check-today" style="width: 18px; height: 18px;">
+            <span>Mark completed for today immediately</span>
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-secondary btn-close-dialog">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Routine</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 2. Food & Nutrition Log Modal (Search, Photo Scan, Manual) -->
+  <dialog id="food-dialog" aria-labelledby="food-modal-title">
+    <div class="dialog-header">
+      <h3 id="food-modal-title">Log Nourishment</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <!-- Modal Tabs -->
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" data-tab="search">🔍 Search Catalog</button>
+        <button class="modal-tab-btn" data-tab="photo">📷 Photo Scan (Est.)</button>
+        <button class="modal-tab-btn" data-tab="manual">✍️ Custom Manual</button>
+      </div>
+
+      <!-- Tab 1: Search Database -->
+      <div id="food-pane-search" class="food-tab-pane active">
+        <div style="display: flex; gap: 10px; margin-bottom: 12px;">
+          <div class="search-input-wrap" style="flex: 1;">
+            <input type="text" id="food-db-search-input" placeholder="Search avocado toast, grilled salmon, oats, smoothie..." class="search-field">
+          </div>
+          <select id="food-db-meal-type" class="form-select-sm" style="width: 120px;">
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch" selected>Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snack">Snack</option>
+          </select>
+        </div>
+        <div id="food-db-results-list" class="food-db-results-list"></div>
+      </div>
+
+      <!-- Tab 2: Photo Scan (AI Visual Estimation) -->
+      <div id="food-pane-photo" class="food-tab-pane">
+        <div class="modal-disclaimer-callout">
+          📷 <strong>Visual Portions Feature:</strong> Snap or select a dish photo to estimate volume, caloric density, and macronutrients. <em>Values are estimated approximations and not medically precise. Review and fine-tune portions before saving.</em>
+        </div>
+
+        <label style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px;">
+          Try a Demo Meal Photo:
+        </label>
+        <div id="photo-presets-mount" class="photo-presets-grid"></div>
+
+        <div style="margin: 16px 0; text-align: center; color: var(--text-muted); font-size: 0.78rem;">
+          — OR UPLOAD / SNAP YOUR OWN PHOTO —
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+          <label class="btn btn-secondary btn-sm" style="cursor: pointer;">
+            📷 Choose / Capture Image
+            <input type="file" id="food-camera-input" accept="image/*" capture="environment" style="display: none;">
+          </label>
+        </div>
+
+        <div id="photo-analysis-results-card" style="display: none;"></div>
+      </div>
+
+      <!-- Tab 3: Manual Food Entry -->
+      <div id="food-pane-manual" class="food-tab-pane">
+        <form id="food-manual-form" class="photo-confirm-grid">
+          <div class="form-group">
+            <label for="food-manual-type">Meal Category</label>
+            <select id="food-manual-type" class="form-select">
+              <option value="Breakfast">Breakfast</option>
+              <option value="Lunch" selected>Lunch</option>
+              <option value="Dinner">Dinner</option>
+              <option value="Snack">Snack</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-name">Food Name</label>
+            <input type="text" id="food-manual-name" required placeholder="e.g. Chia Seed Pudding" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-portion">Portion Size</label>
+            <input type="text" id="food-manual-portion" placeholder="e.g. 1 bowl (200g)" value="1 serving" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-cal">Calories (kcal)</label>
+            <input type="number" id="food-manual-cal" required min="0" placeholder="320" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-protein">Protein (g)</label>
+            <input type="number" id="food-manual-protein" min="0" placeholder="15" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-carbs">Carbs (g)</label>
+            <input type="number" id="food-manual-carbs" min="0" placeholder="35" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-fat">Healthy Fat (g)</label>
+            <input type="number" id="food-manual-fat" min="0" placeholder="10" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-fiber">Fiber (g)</label>
+            <input type="number" id="food-manual-fiber" min="0" placeholder="6" class="form-input">
+          </div>
+
+          <div class="form-group">
+            <label for="food-manual-sodium">Sodium (mg)</label>
+            <input type="number" id="food-manual-sodium" min="0" placeholder="120" class="form-input">
+          </div>
+
+          <div class="form-actions-full">
+            <button type="submit" class="btn btn-primary btn-sm">Log Food Entry</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 3. Course Modal -->
+  <dialog id="course-dialog" aria-labelledby="course-modal-title">
+    <div class="dialog-header">
+      <h3 id="course-modal-title">Enrolled Academic Course</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <form id="course-form" class="photo-confirm-grid">
+        <div class="form-group">
+          <label for="course-input-code">Course Code</label>
+          <input type="text" id="course-input-code" required placeholder="e.g. CS 450" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-name">Course Title</label>
+          <input type="text" id="course-input-name" required placeholder="e.g. Operating Systems Architecture" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-prof">Professor / Instructor</label>
+          <input type="text" id="course-input-prof" placeholder="Dr. Alan Turing" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-credits">Credit Weight</label>
+          <input type="number" id="course-input-credits" value="4" min="1" max="12" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-grade">Current Grade</label>
+          <select id="course-input-grade" class="form-select">
+            <option value="A+">A+ (4.0)</option>
+            <option value="A" selected>A (4.0)</option>
+            <option value="A-">A- (3.7)</option>
+            <option value="B+">B+ (3.3)</option>
+            <option value="B">B (3.0)</option>
+            <option value="B-">B- (2.7)</option>
+            <option value="C+">C+ (2.3)</option>
+            <option value="C">C (2.0)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-pct">Percentage (%)</label>
+          <input type="number" id="course-input-pct" value="94.0" step="0.1" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-color">Badge Color Accent</label>
+          <select id="course-input-color" class="form-select">
+            <option value="#34d399">Emerald (#34d399)</option>
+            <option value="#38bdf8">Sky Blue (#38bdf8)</option>
+            <option value="#a78bfa">Lavender (#a78bfa)</option>
+            <option value="#fb7185">Rose Coral (#fb7185)</option>
+            <option value="#fbbf24">Amber Bronze (#fbbf24)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="course-input-schedule">Lecture Times</label>
+          <input type="text" id="course-input-schedule" placeholder="Tue, Thu 10:00 - 11:30 AM" class="form-input">
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="course-input-loc">Classroom Location</label>
+          <input type="text" id="course-input-loc" placeholder="Science Quad 214" class="form-input">
+        </div>
+
+        <div class="form-actions-full">
+          <button type="submit" class="btn btn-primary btn-sm">Enroll Course</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 4. Deadline Modal -->
+  <dialog id="deadline-dialog" aria-labelledby="deadline-modal-title">
+    <div class="dialog-header">
+      <h3 id="deadline-modal-title">New Academic Milestone</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <form id="deadline-form">
+        <div class="form-group">
+          <label for="deadline-course-select">Associated Course</label>
+          <select id="deadline-course-select" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label for="deadline-title">Title & Topic</label>
+          <input type="text" id="deadline-title" required placeholder="e.g. Midterm Examination / Project Deliverable" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="deadline-due-date">Due Date</label>
+          <input type="date" id="deadline-due-date" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="deadline-type">Category</label>
+          <select id="deadline-type" class="form-select">
+            <option value="Assignment">Assignment</option>
+            <option value="Project">Project Milestone</option>
+            <option value="Exam">Exam / Quiz</option>
+            <option value="Paper">Research Paper</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="deadline-priority">Priority Urgency</label>
+          <select id="deadline-priority" class="form-select">
+            <option value="High">High Priority</option>
+            <option value="Medium" selected>Medium Priority</option>
+            <option value="Low">Low Priority</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="deadline-weight">Syllabus Grade Weight</label>
+          <input type="text" id="deadline-weight" placeholder="e.g. 15% of final grade" value="15%" class="form-input">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+          <button type="button" class="btn btn-secondary btn-close-dialog">Cancel</button>
+          <button type="submit" class="btn btn-primary">Schedule Deadline</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 5. Due / Campus Payment Modal -->
+  <dialog id="due-dialog" aria-labelledby="due-modal-title">
+    <div class="dialog-header">
+      <h3 id="due-modal-title">Record Campus Fee / Due</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <form id="due-form" class="photo-confirm-grid">
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="due-input-title">Billing Title</label>
+          <input type="text" id="due-input-title" required placeholder="e.g. Semester Tuition Balance / Lab Fee" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="due-input-category">Category</label>
+          <select id="due-input-category" class="form-select">
+            <option value="Tuition">Tuition & Enrollment</option>
+            <option value="Lab Deposit">Lab Deposit / Consumables</option>
+            <option value="Union & Guilds">Student Union & Guilds</option>
+            <option value="Textbooks">Textbooks & Subscriptions</option>
+            <option value="Housing">Housing & Facilities</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="due-input-amount">Amount</label>
+          <input type="number" id="due-input-amount" required step="0.01" min="0" placeholder="150.00" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="due-input-currency">Currency Symbol</label>
+          <input type="text" id="due-input-currency" value="$" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="due-input-date">Due Date</label>
+          <input type="date" id="due-input-date" required class="form-input">
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="due-input-inst">Billing Office / Institution</label>
+          <input type="text" id="due-input-inst" placeholder="e.g. University Bursar Office" class="form-input">
+        </div>
+
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label for="due-input-notes">Invoice / Reference Notes</label>
+          <input type="text" id="due-input-notes" placeholder="Invoice # or receipt reference" class="form-input">
+        </div>
+
+        <div class="form-actions-full">
+          <button type="submit" class="btn btn-primary btn-sm">Record Fee</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 6. Note Upload / Create Modal -->
+  <dialog id="note-dialog" aria-labelledby="note-modal-title">
+    <div class="dialog-header">
+      <h3 id="note-modal-title">Save Note or Document</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <form id="note-form">
+        <div class="form-group">
+          <label for="note-title">Document Title</label>
+          <input type="text" id="note-title" required placeholder="e.g. Dynamic Programming Recurrence Relations" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="note-course-select">Course Subject</label>
+          <select id="note-course-select" class="form-select"></select>
+        </div>
+
+        <div class="form-group">
+          <label for="note-folder-select">Folder Classification</label>
+          <select id="note-folder-select" class="form-select">
+            <option value="Lecture Notes">Lecture Notes</option>
+            <option value="Study Guides">Study Guides</option>
+            <option value="Cheatsheets">Cheatsheets</option>
+            <option value="Research">Research & Papers</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="note-tags">Tags (comma-separated)</label>
+          <input type="text" id="note-tags" placeholder="Algorithms, Recursion, Midterm" class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="note-content">Summary & Key Concepts (Markdown supported)</label>
+          <textarea id="note-content" rows="6" placeholder="Enter key formulas, theorems, and bullet insights..." class="form-textarea"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="note-attachment-file">Upload PDF or Image Attachment</label>
+          <input type="file" id="note-attachment-file" accept=".pdf, image/*" class="form-input">
+          <small style="color: var(--text-muted); font-size: 0.72rem; margin-top: 4px;">Supports PDF lecture slides, diagram screenshots, and handwritten notes.</small>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+          <button type="button" class="btn btn-secondary btn-close-dialog">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Document</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 7. Note Reader & Document Preview Dialog -->
+  <dialog id="note-preview-dialog" aria-labelledby="preview-note-title" style="max-width: 720px;">
+    <div class="dialog-header">
+      <h3 id="preview-note-title">Document Reader</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <div class="note-preview-meta">
+        <span id="preview-note-course" class="course-mini-tag">CS 341</span>
+        <span id="preview-note-folder">📁 Folder</span>
+        <span id="preview-note-date">🗓️ Date</span>
+      </div>
+
+      <div id="preview-note-body" class="preview-body-prose"></div>
+
+      <div id="preview-note-attachment" style="display: none;"></div>
+    </div>
+  </dialog>
+
+  <!-- 8. Multi-User Authentication & Account Switcher Modal -->
+  <dialog id="auth-dialog" aria-labelledby="auth-modal-title">
+    <div class="dialog-header">
+      <h3 id="auth-modal-title">Account & Multi-User Profiles</h3>
+      <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
+    </div>
+    <div class="dialog-body">
+      <!-- 1-Click Instant Demo Button -->
+      <div style="background: rgba(52, 211, 153, 0.08); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 20px; text-align: center;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 4px;">🚀 Instant Showcase Experience</h4>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 10px;">Load the rich pre-populated demo session with habits, meals, courses, notes, and dues.</p>
+        <button class="btn btn-primary btn-sm" id="btn-auth-demo-instant">
+          Try Demo Account (Alex Chen)
+        </button>
+      </div>
+
+      <!-- Existing Users Switcher -->
+      <div style="margin-bottom: 22px;">
+        <h4 style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Saved Profiles On This Device</h4>
+        <div id="auth-existing-users-list"></div>
+      </div>
+
+      <!-- Login / Sign-up Forms Divider -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid var(--border-subtle); padding-top: 18px;">
+        <!-- Login Form -->
+        <form id="auth-login-form">
+          <h4 style="font-size: 0.95rem; margin-bottom: 12px;">Sign In</h4>
+          <div class="form-group">
+            <label for="auth-login-email">Email</label>
+            <input type="email" id="auth-login-email" required placeholder="you@university.edu" class="form-input-sm">
+          </div>
+          <div class="form-group">
+            <label for="auth-login-password">Password</label>
+            <input type="password" id="auth-login-password" required placeholder="••••••••" class="form-input-sm">
+          </div>
+          <button type="submit" class="btn btn-secondary btn-sm" style="width: 100%;">Sign In</button>
+          <button type="button" id="btn-forgot-password" class="btn-subtle" style="font-size: 0.74rem; width: 100%; margin-top: 6px;">Forgot password?</button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="auth-signup-form">
+          <h4 style="font-size: 0.95rem; margin-bottom: 12px;">Create New Account</h4>
+          <div class="form-group">
+            <label for="auth-signup-name">Full Name</label>
+            <input type="text" id="auth-signup-name" required placeholder="Jordan Lee" class="form-input-sm">
+          </div>
+          <div class="form-group">
+            <label for="auth-signup-email">Email</label>
+            <input type="email" id="auth-signup-email" required placeholder="jordan@domain.com" class="form-input-sm">
+          </div>
+          <div class="form-group">
+            <label for="auth-signup-password">Password</label>
+            <input type="password" id="auth-signup-password" required placeholder="Create password" class="form-input-sm">
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm" style="width: 100%;">Sign Up</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ES Module Application Bootstrap -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
