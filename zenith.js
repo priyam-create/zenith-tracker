@@ -165,7 +165,7 @@ const FOOD_DATABASE = [
     fat: 20,
     fiber: 7,
     sodium: 380,
-    icon: '🥑'
+    icon: 'utensils'
   },
   {
     id: 'food_2',
@@ -178,7 +178,7 @@ const FOOD_DATABASE = [
     fat: 4,
     fiber: 3,
     sodium: 65,
-    icon: '🥣'
+    icon: 'coffee'
   },
   {
     id: 'food_3',
@@ -191,7 +191,7 @@ const FOOD_DATABASE = [
     fat: 11,
     fiber: 8,
     sodium: 20,
-    icon: '🌾'
+    icon: 'wheat'
   },
   {
     id: 'food_4',
@@ -204,7 +204,7 @@ const FOOD_DATABASE = [
     fat: 16,
     fiber: 6,
     sodium: 490,
-    icon: '🥗'
+    icon: 'salad'
   },
   {
     id: 'food_5',
@@ -217,7 +217,7 @@ const FOOD_DATABASE = [
     fat: 30,
     fiber: 4,
     sodium: 390,
-    icon: '🐟'
+    icon: 'fish'
   },
   {
     id: 'food_6',
@@ -230,7 +230,7 @@ const FOOD_DATABASE = [
     fat: 14,
     fiber: 7,
     sodium: 540,
-    icon: '🍲'
+    icon: 'soup'
   },
   {
     id: 'food_7',
@@ -243,7 +243,7 @@ const FOOD_DATABASE = [
     fat: 3,
     fiber: 1,
     sodium: 180,
-    icon: '🥤'
+    icon: 'cup-soda'
   },
   {
     id: 'food_8',
@@ -256,7 +256,7 @@ const FOOD_DATABASE = [
     fat: 15,
     fiber: 5,
     sodium: 110,
-    icon: '🍎'
+    icon: 'apple'
   },
   {
     id: 'food_9',
@@ -269,7 +269,7 @@ const FOOD_DATABASE = [
     fat: 10,
     fiber: 5,
     sodium: 410,
-    icon: '🫓'
+    icon: 'pie-chart'
   },
   {
     id: 'food_10',
@@ -282,7 +282,7 @@ const FOOD_DATABASE = [
     fat: 12,
     fiber: 14,
     sodium: 460,
-    icon: '🍠'
+    icon: 'utensils'
   },
   {
     id: 'food_11',
@@ -295,7 +295,7 @@ const FOOD_DATABASE = [
     fat: 4,
     fiber: 1,
     sodium: 90,
-    icon: '☕'
+    icon: 'coffee'
   },
   {
     id: 'food_12',
@@ -308,7 +308,7 @@ const FOOD_DATABASE = [
     fat: 17,
     fiber: 3,
     sodium: 45,
-    icon: '🥜'
+    icon: 'circle-dot'
   }
 ];
 
@@ -417,7 +417,7 @@ function getInitialDemoState() {
         id: 'hab_1',
         name: 'Morning Mindfulness & Breathwork',
         category: 'Mind & Body',
-        icon: '🧘',
+        icon: 'wind',
         targetTime: '07:30 AM',
         frequency: 'Everyday',
         currentStreak: 14,
@@ -443,7 +443,7 @@ function getInitialDemoState() {
         id: 'hab_2',
         name: 'Deep Work: Algorithms & Problem Solving',
         category: 'Academics',
-        icon: '💻',
+        icon: 'code',
         targetTime: '09:00 AM',
         frequency: 'Weekdays',
         currentStreak: 9,
@@ -462,7 +462,7 @@ function getInitialDemoState() {
         id: 'hab_3',
         name: 'Hydration Target (2.5L Clean Water)',
         category: 'Fitness',
-        icon: '💧',
+        icon: 'droplets',
         targetTime: 'All Day',
         frequency: 'Everyday',
         currentStreak: 6,
@@ -481,7 +481,7 @@ function getInitialDemoState() {
         id: 'hab_4',
         name: 'Read 20 Pages (Non-Fiction / Research)',
         category: 'Productivity',
-        icon: '📖',
+        icon: 'book-open',
         targetTime: '09:30 PM',
         frequency: 'Everyday',
         currentStreak: 12,
@@ -499,7 +499,7 @@ function getInitialDemoState() {
         id: 'hab_5',
         name: 'Strength Training / Movement',
         category: 'Fitness',
-        icon: '🏋️',
+        icon: 'dumbbell',
         targetTime: '05:30 PM',
         frequency: '4x / week',
         currentStreak: 3,
@@ -515,7 +515,7 @@ function getInitialDemoState() {
         id: 'hab_6',
         name: 'Digital Wind-down (No screens after 10:30 PM)',
         category: 'Mind & Body',
-        icon: '🌙',
+        icon: 'moon',
         targetTime: '10:30 PM',
         frequency: 'Everyday',
         currentStreak: 5,
@@ -1310,13 +1310,14 @@ class HabitTracker {
       // Rotate motivational thought on completion
       const newThought = quotesEngine.onHabitCheckIn();
       this.app.renderMotivationalBanner(newThought, true);
-      this.app.showToast(`Completed: ${habit.name}! 🔥 ${habit.currentStreak} day streak`, 'success');
+      this.app.showToast(`Completed: ${habit.name}! ${habit.currentStreak} day streak`, 'success');
     } else {
       sound.playPop();
     }
 
     this.render();
     this.app.renderOverview();
+    if (window.lucide) window.lucide.createIcons();
     return true;
   }
 
@@ -1491,7 +1492,7 @@ class HabitTracker {
         <div class="stat-card glass-panel">
           <div class="stat-header">
             <span class="stat-title">Today's Completion</span>
-            <span class="stat-icon">🎯</span>
+            <span class="stat-icon"><i data-lucide="target"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value">${stats.percentage}%</div>
@@ -1505,7 +1506,7 @@ class HabitTracker {
         <div class="stat-card glass-panel">
           <div class="stat-header">
             <span class="stat-title">Active Streaks</span>
-            <span class="stat-icon">🔥</span>
+            <span class="stat-icon"></span>
           </div>
           <div class="stat-main">
             <div class="stat-value">${stats.totalStreaks} <span class="stat-unit">days</span></div>
@@ -1517,7 +1518,7 @@ class HabitTracker {
         <div class="stat-card glass-panel">
           <div class="stat-header">
             <span class="stat-title">Personal Record</span>
-            <span class="stat-icon">🏆</span>
+            <span class="stat-icon"><i data-lucide="award"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value">${stats.bestStreak} <span class="stat-unit">days</span></div>
@@ -1565,7 +1566,7 @@ class HabitTracker {
     if (habits.length === 0) {
       html += `
         <div class="empty-state">
-          <div class="empty-icon">🌱</div>
+          <div class="empty-icon"></div>
           <h3>No habits in this category</h3>
           <p>Create your first habit to build atomic momentum daily.</p>
           <button class="btn btn-secondary btn-sm" id="btn-empty-create-habit">Create Habit</button>
@@ -1578,7 +1579,7 @@ class HabitTracker {
           <div class="habit-row ${isTodayDone ? 'row-completed' : ''}" data-id="${habit.id}">
             <div class="col-habit-info">
               <button class="habit-quick-check-btn ${isTodayDone ? 'checked' : ''}" data-id="${habit.id}" aria-label="Toggle ${habit.name}">
-                <span class="habit-icon">${habit.icon}</span>
+                <span class="habit-icon"><i data-lucide="${habit.icon || 'check-square'}"></i></span>
                 <span class="check-indicator">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </span>
@@ -1587,7 +1588,7 @@ class HabitTracker {
                 <span class="habit-name">${habit.name}</span>
                 <div class="habit-meta">
                   <span class="habit-badge">${habit.category}</span>
-                  <span class="habit-time">🕒 ${habit.targetTime}</span>
+                  <span class="habit-time"><i data-lucide="clock" style="width:12px;height:12px;display:inline;"></i> ${habit.targetTime}</span>
                   <span class="habit-freq">${habit.frequency}</span>
                 </div>
               </div>
@@ -1609,7 +1610,7 @@ class HabitTracker {
 
             <div class="col-habit-streak">
               <div class="streak-badge ${habit.currentStreak > 0 ? 'streak-active' : 'streak-dormant'}">
-                <span class="flame-icon">🔥</span>
+                <span class="flame-icon"><i data-lucide="flame" style="width:14px;height:14px;"></i></span>
                 <span class="streak-num">${habit.currentStreak || 0}</span>
               </div>
               <span class="streak-best" title="Best streak">Best: ${habit.bestStreak || 0}d</span>
@@ -1886,13 +1887,13 @@ class NutritionTracker {
         </div>
         <div class="quick-bar-buttons">
           <button class="btn btn-primary btn-sm" id="btn-quick-search-food">
-            🔍 Search Food
+            <i data-lucide="search"></i> Search Catalog
           </button>
           <button class="btn btn-secondary btn-sm" id="btn-quick-photo-food">
-            📷 Photo Scan (Est.)
+            <i data-lucide="camera"></i> Photo Estimate
           </button>
           <button class="btn btn-secondary btn-sm" id="btn-quick-manual-food">
-            ✍️ Custom Entry
+            <i data-lucide="pen-line"></i> Custom Entry
           </button>
         </div>
       </div>
@@ -1949,7 +1950,7 @@ class NutritionTracker {
             <!-- Protein -->
             <div class="macro-bar-item">
               <div class="macro-bar-info">
-                <span class="macro-name text-protein">🥩 Protein</span>
+                <span class="macro-name text-protein">Protein</span>
                 <span class="macro-stat"><strong>${totals.protein}g</strong> / ${goals.protein}g (${proteinPct}%)</span>
               </div>
               <div class="progress-bar-track">
@@ -1960,7 +1961,7 @@ class NutritionTracker {
             <!-- Carbohydrates -->
             <div class="macro-bar-item">
               <div class="macro-bar-info">
-                <span class="macro-name text-carbs">🌾 Carbohydrates</span>
+                <span class="macro-name text-carbs">Carbohydrates</span>
                 <span class="macro-stat"><strong>${totals.carbs}g</strong> / ${goals.carbs}g (${carbsPct}%)</span>
               </div>
               <div class="progress-bar-track">
@@ -1971,7 +1972,7 @@ class NutritionTracker {
             <!-- Healthy Fats -->
             <div class="macro-bar-item">
               <div class="macro-bar-info">
-                <span class="macro-name text-fats">🥑 Healthy Fats</span>
+                <span class="macro-name text-fats">Healthy Fats</span>
                 <span class="macro-stat"><strong>${totals.fat}g</strong> / ${goals.fat}g (${fatPct}%)</span>
               </div>
               <div class="progress-bar-track">
@@ -1984,14 +1985,14 @@ class NutritionTracker {
           <div class="micros-divider"></div>
           <div class="micros-grid">
             <div class="micro-badge">
-              <span class="micro-title">🌾 Dietary Fiber</span>
+              <span class="micro-title">Dietary Fiber</span>
               <span class="micro-val"><strong>${totals.fiber}g</strong> / ${goals.fiber}g</span>
               <div class="progress-bar-track mini-track">
                 <div class="progress-bar-fill progress-fiber" style="width: ${fiberPct}%;"></div>
               </div>
             </div>
             <div class="micro-badge">
-              <span class="micro-title">🧂 Sodium Limit</span>
+              <span class="micro-title">Sodium Limit</span>
               <span class="micro-val"><strong>${totals.sodium}mg</strong> / ${goals.sodium}mg</span>
               <div class="progress-bar-track mini-track">
                 <div class="progress-bar-fill ${totals.sodium > goals.sodium ? 'progress-danger' : 'progress-amber'}" style="width: ${sodiumPct}%;"></div>
@@ -2049,7 +2050,7 @@ class NutritionTracker {
       <div class="water-card glass-panel">
         <div class="water-info">
           <div class="water-header">
-            <span class="water-icon">💧</span>
+            <span class="water-icon"><i data-lucide="droplets"></i></span>
             <div>
               <h4>Hydration Target</h4>
               <p class="water-sub">${currentMl} ml of ${goalMl} ml daily goal (${pct}%)</p>
@@ -2082,7 +2083,7 @@ class NutritionTracker {
     if (filtered.length === 0) {
       return `
         <div class="empty-state glass-panel">
-          <div class="empty-icon">🥗</div>
+          <div class="empty-icon"><i data-lucide="apple"></i></div>
           <h4>No meals logged ${this.activeMealFilter !== 'All' ? `for ${this.activeMealFilter}` : 'today'}</h4>
           <p>Tap "Search Food" or "Photo Scan" above to log what you nourish your body with.</p>
         </div>
@@ -2097,13 +2098,13 @@ class NutritionTracker {
             <span class="meal-name">${item.name}</span>
             ${item.isEstimate ? `
               <span class="estimate-tag" title="Visual estimate with ${item.confidence || 85}% algorithmic confidence">
-                📷 Est. ${item.confidence ? `${item.confidence}%` : ''}
+                Est. ${item.confidence ? `${item.confidence}%` : ''}
               </span>
             ` : ''}
           </div>
           <div class="meal-meta-row">
-            <span>⚖️ ${item.portion}</span>
-            <span>🕒 ${item.time}</span>
+            <span>${item.portion}</span>
+            <span>${item.time}</span>
             ${item.source ? `<span class="source-tag">${item.source}</span>` : ''}
           </div>
         </div>
@@ -2434,25 +2435,25 @@ class AcademicDashboard {
             </div>
           </div>
           <div class="academic-stats-mini">
-            <span class="stat-pill">📚 ${academics.courses.length} Active Courses</span>
+            <span class="stat-pill"><i data-lucide="book-open"></i> ${academics.courses.length} Active Courses</span>
             <span class="stat-pill">⏳ ${academics.deadlines.filter(d => !d.completed).length} Upcoming Deadlines</span>
-            <span class="stat-pill">📂 ${academics.notes.length} Knowledge Files</span>
+            <span class="stat-pill"><i data-lucide="folder"></i> ${academics.notes.length} Knowledge Files</span>
           </div>
         </div>
 
         <!-- Academic Module Navigation Tabs -->
         <div class="academic-subnav-tabs">
           <button class="subnav-tab ${this.activeTab === 'courses' ? 'active' : ''}" data-tab="courses">
-            📖 Courses & Records
+            Courses & Records
           </button>
           <button class="subnav-tab ${this.activeTab === 'deadlines' ? 'active' : ''}" data-tab="deadlines">
             ⏳ Deadlines & To-Dos
           </button>
           <button class="subnav-tab ${this.activeTab === 'dues' ? 'active' : ''}" data-tab="dues">
-            💳 Dues & Payments
+            Dues & Payments
           </button>
           <button class="subnav-tab ${this.activeTab === 'notes' ? 'active' : ''}" data-tab="notes">
-            📑 Notes & Documents
+            Notes & Documents
           </button>
         </div>
       </div>
@@ -2493,7 +2494,7 @@ class AcademicDashboard {
       <div class="courses-grid">
         ${courses.length === 0 ? `
           <div class="empty-state glass-panel">
-            <div class="empty-icon">🎓</div>
+            <div class="empty-icon"><i data-lucide="graduation-cap"></i></div>
             <h4>No courses enrolled yet</h4>
             <p>Add your semester subjects to calculate cumulative GPA and track assignments.</p>
           </div>
@@ -2510,11 +2511,11 @@ class AcademicDashboard {
             </div>
 
             <h4 class="course-title">${c.name}</h4>
-            <div class="course-instructor">👨‍🏫 ${c.professor}</div>
+            <div class="course-instructor">${c.professor}</div>
 
             <div class="course-schedule-row">
-              <span>🗓️ ${c.schedule}</span>
-              <span>📍 ${c.location}</span>
+              <span>${c.schedule}</span>
+              <span>${c.location}</span>
             </div>
 
             <div class="course-card-footer">
@@ -2557,7 +2558,7 @@ class AcademicDashboard {
           <div class="deadlines-list">
             ${sortedDeadlines.length === 0 ? `
               <div class="empty-state">
-                <div class="empty-icon">🎉</div>
+                <div class="empty-icon"><i data-lucide="check-circle"></i></div>
                 <h4>Zero pending deadlines</h4>
                 <p>Enjoy your downtime or prepare ahead for upcoming exams.</p>
               </div>
@@ -2588,7 +2589,7 @@ class AcademicDashboard {
                     </div>
                     <div class="deadline-meta-line">
                       <span class="countdown-badge ${urgencyClass}">${countdownText}</span>
-                      <span>📅 Due: ${d.dueDate}</span>
+                      <span>Due: ${d.dueDate}</span>
                       <span class="weight-badge">${d.weight}</span>
                       <span class="type-badge">${d.type}</span>
                     </div>
@@ -2645,7 +2646,7 @@ class AcademicDashboard {
         <div class="stat-card glass-panel">
           <div class="stat-header">
             <span class="stat-title">Pending Balance</span>
-            <span class="stat-icon">💳</span>
+            <span class="stat-icon"><i data-lucide="credit-card"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value text-amber">$${pendingDues.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
@@ -2656,7 +2657,7 @@ class AcademicDashboard {
         <div class="stat-card glass-panel">
           <div class="stat-header">
             <span class="stat-title">Total Paid to Date</span>
-            <span class="stat-icon">✅</span>
+            <span class="stat-icon"><i data-lucide="check-circle"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value text-emerald">$${paidDues.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
@@ -2667,7 +2668,7 @@ class AcademicDashboard {
         <div class="stat-card glass-panel">
           <div class="stat-header">
             <span class="stat-title">Cumulative Records</span>
-            <span class="stat-icon">📑</span>
+            <span class="stat-icon"><i data-lucide="file-text"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value">$${totalDues.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
@@ -2690,7 +2691,7 @@ class AcademicDashboard {
         <div class="dues-list">
           ${dues.length === 0 ? `
             <div class="empty-state">
-              <div class="empty-icon">🧾</div>
+              <div class="empty-icon"><i data-lucide="credit-card"></i></div>
               <h4>No dues or payments recorded</h4>
               <p>Add tuition installments, lab deposits, or student association memberships.</p>
             </div>
@@ -2702,9 +2703,9 @@ class AcademicDashboard {
                   <span class="due-title">${d.title}</span>
                   <div class="due-meta">
                     <span class="due-category-pill">${d.category}</span>
-                    <span>🏛️ ${d.institution}</span>
-                    <span>📅 Due: ${d.dueDate}</span>
-                    ${d.notes ? `<span>📝 ${d.notes}</span>` : ''}
+                    <span>${d.institution}</span>
+                    <span>Due: ${d.dueDate}</span>
+                    ${d.notes ? `<span>${d.notes}</span>` : ''}
                   </div>
                 </div>
 
@@ -2771,7 +2772,7 @@ class AcademicDashboard {
       <div class="notes-cards-grid">
         ${notes.length === 0 ? `
           <div class="empty-state glass-panel full-width">
-            <div class="empty-icon">📁</div>
+            <div class="empty-icon"><i data-lucide="folder"></i></div>
             <h4>No documents found matching "${this.notesSearchQuery || this.notesSelectedFolder}"</h4>
             <p>Upload a new PDF/image or adjust your search filters.</p>
           </div>
@@ -2779,7 +2780,7 @@ class AcademicDashboard {
           <div class="note-card glass-panel" data-id="${note.id}">
             <div class="note-card-header">
               <span class="course-mini-tag">${note.courseCode}</span>
-              <span class="folder-pill">📁 ${note.folder}</span>
+              <span class="folder-pill">${note.folder}</span>
             </div>
 
             <h4 class="note-title">${note.title}</h4>
@@ -2787,7 +2788,7 @@ class AcademicDashboard {
 
             ${note.attachment ? `
               <div class="attachment-pill" title="Attachment: ${note.attachment.name}">
-                <span class="attach-icon">${note.attachment.type === 'pdf' ? '📕' : '🖼️'}</span>
+                <span class="attach-icon">${note.attachment.type === 'pdf' ? '<i data-lucide="file-text"></i>' : '<i data-lucide="image"></i>'}</span>
                 <span class="attach-name">${note.attachment.name}</span>
                 <span class="attach-size">${note.attachment.size}</span>
               </div>
@@ -2798,7 +2799,7 @@ class AcademicDashboard {
             </div>
 
             <div class="note-card-footer">
-              <span class="note-date">🗓️ ${note.date}</span>
+              <span class="note-date">${note.date}</span>
               <div class="note-action-btns">
                 <button class="btn btn-secondary btn-xs btn-preview-note" data-id="${note.id}">
                   Read / Preview
@@ -2901,7 +2902,7 @@ class AcademicDashboard {
           if (notes.length === 0) {
             grid.innerHTML = `
               <div class="empty-state glass-panel full-width">
-                <div class="empty-icon">📁</div>
+                <div class="empty-icon"><i data-lucide="folder"></i></div>
                 <h4>No documents found matching "${this.notesSearchQuery}"</h4>
                 <p>Adjust your search query.</p>
               </div>
@@ -2911,13 +2912,13 @@ class AcademicDashboard {
               <div class="note-card glass-panel" data-id="${note.id}">
                 <div class="note-card-header">
                   <span class="course-mini-tag">${note.courseCode}</span>
-                  <span class="folder-pill">📁 ${note.folder}</span>
+                  <span class="folder-pill">${note.folder}</span>
                 </div>
                 <h4 class="note-title">${note.title}</h4>
                 <p class="note-snippet">${note.content.substring(0, 140).replace(/#/g, '')}...</p>
                 ${note.attachment ? `
                   <div class="attachment-pill">
-                    <span class="attach-icon">${note.attachment.type === 'pdf' ? '📕' : '🖼️'}</span>
+                    <span class="attach-icon">${note.attachment.type === 'pdf' ? '<i data-lucide="file-text"></i>' : '<i data-lucide="image"></i>'}</span>
                     <span class="attach-name">${note.attachment.name}</span>
                     <span class="attach-size">${note.attachment.size}</span>
                   </div>
@@ -2926,7 +2927,7 @@ class AcademicDashboard {
                   ${(note.tags || []).map(t => `<span class="note-tag">#${t}</span>`).join('')}
                 </div>
                 <div class="note-card-footer">
-                  <span class="note-date">🗓️ ${note.date}</span>
+                  <span class="note-date">${note.date}</span>
                   <div class="note-action-btns">
                     <button class="btn btn-secondary btn-xs btn-preview-note" data-id="${note.id}">Read / Preview</button>
                     <button class="btn-icon-subtle btn-delete-note" data-id="${note.id}">×</button>
@@ -3011,6 +3012,7 @@ class ZenithApp {
     this.bindModals();
     this.renderMotivationalBanner(quotesEngine.getCurrent());
     this.switchView('overview');
+    if (window.lucide) window.lucide.createIcons();
 
     // Subscribe to state changes for auto-sync reflection
     storage.subscribe(() => {
@@ -3069,6 +3071,15 @@ class ZenithApp {
     else if (viewName === 'nutrition') this.nutrition.render();
     else if (viewName === 'academics') this.academics.render();
     else if (viewName === 'settings') this.renderSettings();
+    else if (viewName === 'brain-dump') this.renderBrainDump();
+    else if (viewName === 'focus-timer') this.renderFocusTimer();
+    else if (viewName === 'eisenhower') this.renderEisenhower();
+    else if (viewName === 'breathwork') this.renderBreathwork();
+    else if (viewName === 'converter') this.renderConverter();
+
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
 
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3194,7 +3205,7 @@ class ZenithApp {
         <div class="stat-card glass-panel cursor-pointer" id="dash-card-habits">
           <div class="stat-header">
             <span class="stat-title">Habits Done</span>
-            <span class="stat-icon">🔥</span>
+            <span class="stat-icon"></span>
           </div>
           <div class="stat-main">
             <div class="stat-value">${habitStats.completedToday}/${habitStats.total}</div>
@@ -3209,7 +3220,7 @@ class ZenithApp {
         <div class="stat-card glass-panel cursor-pointer" id="dash-card-nutrition">
           <div class="stat-header">
             <span class="stat-title">Energy Consumed</span>
-            <span class="stat-icon">🥗</span>
+            <span class="stat-icon"><i data-lucide="apple"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value">${nutritionTotals.calories} <span class="stat-unit">kcal</span></div>
@@ -3226,7 +3237,7 @@ class ZenithApp {
         <div class="stat-card glass-panel cursor-pointer" id="dash-card-academics">
           <div class="stat-header">
             <span class="stat-title">Current GPA</span>
-            <span class="stat-icon">🎓</span>
+            <span class="stat-icon"><i data-lucide="graduation-cap"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value text-blue">${gpaInfo.gpa}</div>
@@ -3239,7 +3250,7 @@ class ZenithApp {
         <div class="stat-card glass-panel cursor-pointer" id="dash-card-dues">
           <div class="stat-header">
             <span class="stat-title">Pending Dues</span>
-            <span class="stat-icon">💳</span>
+            <span class="stat-icon"><i data-lucide="credit-card"></i></span>
           </div>
           <div class="stat-main">
             <div class="stat-value ${pendingDuesAmount > 0 ? 'text-amber' : 'text-emerald'}">
@@ -3262,7 +3273,7 @@ class ZenithApp {
             <div class="dash-widget glass-panel">
               <div class="widget-header">
                 <div>
-                  <h3 class="widget-title">Today's Atomic Routines</h3>
+                  <h3 class="widget-title">Today's Habits</h3>
                   <p class="widget-sub">1-tap check-in on desktop or phone</p>
                 </div>
                 <button class="btn-subtle-link" id="link-view-all-habits">View All →</button>
@@ -3274,12 +3285,12 @@ class ZenithApp {
                   return `
                     <div class="dash-habit-item ${done ? 'item-checked' : ''}" data-id="${h.id}">
                       <button class="habit-quick-check-btn ${done ? 'checked' : ''}" data-id="${h.id}">
-                        <span class="habit-icon">${h.icon}</span>
-                        <span class="check-indicator">✓</span>
+                        <span class="habit-icon"><i data-lucide="${h.icon || 'check-square'}"></i></span>
+                        <span class="check-indicator"><i data-lucide="check"></i></span>
                       </button>
                       <div class="item-text">
                         <span class="item-title">${h.name}</span>
-                        <span class="item-meta">🔥 ${h.currentStreak || 0}d streak • ${h.category}</span>
+                        <span class="item-meta">${h.currentStreak || 0}d streak • ${h.category}</span>
                       </div>
                     </div>
                   `;
@@ -3301,14 +3312,14 @@ class ZenithApp {
 
               <div class="dash-nutrition-row">
                 <div class="macro-pill-summary">
-                  <span class="macro-badge text-protein">🥩 P: ${nutritionTotals.protein}g / ${nutritionGoals.protein}g</span>
-                  <span class="macro-badge text-carbs">🌾 C: ${nutritionTotals.carbs}g / ${nutritionGoals.carbs}g</span>
-                  <span class="macro-badge text-fats">🥑 F: ${nutritionTotals.fat}g / ${nutritionGoals.fat}g</span>
-                  <span class="macro-badge">🧂 Sodium: ${nutritionTotals.sodium}mg</span>
+                  <span class="macro-badge text-protein">P: ${nutritionTotals.protein}g / ${nutritionGoals.protein}g</span>
+                  <span class="macro-badge text-carbs">C: ${nutritionTotals.carbs}g / ${nutritionGoals.carbs}g</span>
+                  <span class="macro-badge text-fats">F: ${nutritionTotals.fat}g / ${nutritionGoals.fat}g</span>
+                  <span class="macro-badge">Sodium: ${nutritionTotals.sodium}mg</span>
                 </div>
                 <div class="dash-food-actions">
-                  <button class="btn btn-secondary btn-sm" id="dash-btn-search-food">🔍 Search</button>
-                  <button class="btn btn-secondary btn-sm" id="dash-btn-photo-food">📷 Photo Scan</button>
+                  <button class="btn btn-secondary btn-sm" id="dash-btn-search-food"><i data-lucide="search"></i> Search</button>
+                  <button class="btn btn-secondary btn-sm" id="dash-btn-photo-food"><i data-lucide="camera"></i> Photo Scan</button>
                 </div>
               </div>
             </div>
@@ -3330,7 +3341,7 @@ class ZenithApp {
                   <div class="dash-deadline-card">
                     <div class="dl-top">
                       <span class="course-mini-tag">${d.courseCode}</span>
-                      <span class="dl-date">📅 ${d.dueDate}</span>
+                      <span class="dl-date">${d.dueDate}</span>
                     </div>
                     <h5 class="dl-name">${d.title}</h5>
                   </div>
@@ -3424,7 +3435,7 @@ class ZenithApp {
         <!-- Appearance & Theme Preferences -->
         <div class="settings-card glass-panel">
           <div class="settings-card-header">
-            <h3>🎨 Visual Appearance & Palette</h3>
+            <h3>Visual Appearance & Palette</h3>
             <p class="settings-sub">Choose a calming, high-contrast aesthetic that fits your flow.</p>
           </div>
 
@@ -3458,7 +3469,7 @@ class ZenithApp {
         <!-- Nutrition Targets Settings -->
         <div class="settings-card glass-panel">
           <div class="settings-card-header">
-            <h3>🥗 Daily Nutrition & Hydration Goals</h3>
+            <h3>Daily Nutrition & Goals</h3>
             <p class="settings-sub">Set personalized macronutrient thresholds and calorie budgets.</p>
           </div>
 
@@ -3507,7 +3518,7 @@ class ZenithApp {
         <!-- Modular Dashboard & Audio Toggles -->
         <div class="settings-card glass-panel">
           <div class="settings-card-header">
-            <h3>🧩 Modular Widgets & Feedback</h3>
+            <h3>Modular Widgets</h3>
             <p class="settings-sub">Customize which sections appear on your overview screen.</p>
           </div>
 
@@ -3557,7 +3568,7 @@ class ZenithApp {
         <!-- Data Management & Privacy -->
         <div class="settings-card glass-panel">
           <div class="settings-card-header">
-            <h3>🔒 Account, Data Privacy & Backup</h3>
+            <h3>Account & Privacy</h3>
             <p class="settings-sub">Export your data to JSON, switch accounts, or restore defaults.</p>
           </div>
 
@@ -3567,7 +3578,7 @@ class ZenithApp {
                 <h5>Export Personal Backup</h5>
                 <p>Download a complete JSON snapshot of habits, nutrition, and notes.</p>
               </div>
-              <button class="btn btn-secondary btn-sm" id="btn-export-json">📥 Export JSON</button>
+              <button class="btn btn-secondary btn-sm" id="btn-export-json">Export JSON</button>
             </div>
 
             <div class="data-action-item">
@@ -3576,7 +3587,7 @@ class ZenithApp {
                 <p>Upload a previously exported JSON backup file.</p>
               </div>
               <label class="btn btn-secondary btn-sm file-upload-label">
-                📤 Import JSON
+                Import JSON
                 <input type="file" id="file-import-json" accept=".json" style="display: none;" />
               </label>
             </div>
@@ -3853,7 +3864,7 @@ class ZenithApp {
         <span class="food-db-icon">${item.icon}</span>
         <div class="food-db-info">
           <span class="food-db-name">${item.name}</span>
-          <span class="food-db-portion">⚖️ ${item.portion} • ${item.category}</span>
+          <span class="food-db-portion">${item.portion} • ${item.category}</span>
         </div>
         <div class="food-db-macros">
           <span class="food-db-cal"><strong>${item.calories}</strong> kcal</span>
@@ -3936,7 +3947,7 @@ class ZenithApp {
 
           <!-- Medical Disclaimer for Photo Results -->
           <div class="modal-disclaimer-callout">
-            ⚠️ <strong>Approximation Notice:</strong> Photographic volume heuristics provide broad estimates. Actual caloric and macronutrient density depends on preparation and oils. <em>Adjust portions and values below before logging.</em>
+            <strong>Notice:</strong> Photographic volume heuristics provide broad estimates. Actual caloric and macronutrient density depends on preparation and oils. <em>Adjust portions and values below before logging.</em>
           </div>
 
           <!-- Editable Fields Before Saving -->
@@ -4162,8 +4173,8 @@ class ZenithApp {
 
     dialog.querySelector('#preview-note-title').textContent = note.title;
     dialog.querySelector('#preview-note-course').textContent = note.courseCode;
-    dialog.querySelector('#preview-note-folder').textContent = `📁 ${note.folder}`;
-    dialog.querySelector('#preview-note-date').textContent = `🗓️ ${note.date}`;
+    dialog.querySelector('#preview-note-folder').textContent = `${note.folder}`;
+    dialog.querySelector('#preview-note-date').textContent = `${note.date}`;
 
     // Render markdown-like content cleanly
     const contentMount = dialog.querySelector('#preview-note-body');
@@ -4183,14 +4194,14 @@ class ZenithApp {
       if (note.attachment.type === 'image' && note.attachment.previewUrl) {
         attachMount.innerHTML = `
           <div class="note-attached-image-view">
-            <span class="attach-label">🖼️ Attached Diagram / Image (${note.attachment.name}):</span>
+            <span class="attach-label">Attached Image (${note.attachment.name}):</span>
             <img src="${note.attachment.previewUrl}" alt="Note attachment" class="full-note-img" />
           </div>
         `;
       } else {
         attachMount.innerHTML = `
           <div class="note-attached-doc-view">
-            <span class="doc-icon">📕</span>
+            <span class="doc-icon"><i data-lucide="file-text"></i></span>
             <div>
               <strong>${note.attachment.name}</strong> (${note.attachment.size})
               <p class="doc-hint">Native PDF Document • Secured in browser memory</p>
@@ -4305,6 +4316,523 @@ class ZenithApp {
     });
   }
 
+
+  // --- Mankind Suite Mini-Tools ---
+
+  // 1. Brain Dump (Scratchpad)
+  renderBrainDump() {
+    const container = document.getElementById('brain-dump-view-content');
+    if (!container) return;
+
+    const savedText = localStorage.getItem('zenith_braindump_content') || '';
+    const words = savedText.trim() ? savedText.trim().split(/\s+/).length : 0;
+    const chars = savedText.length;
+
+    container.innerHTML = `
+      <div class="tool-view-wrapper">
+        <div class="tool-header-card glass-panel">
+          <div>
+            <h2 class="tool-title"><i data-lucide="brain"></i> Brain Dump</h2>
+            <p class="tool-subtitle">A distraction-free scratchpad for thoughts, code snippets, and rapid ideation.</p>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn btn-secondary btn-sm" id="btn-copy-dump"><i data-lucide="copy"></i> Copy</button>
+            <button class="btn btn-outline btn-sm" id="btn-clear-dump"><i data-lucide="trash-2"></i> Clear</button>
+          </div>
+        </div>
+
+        <div class="brain-dump-card glass-panel">
+          <div class="brain-dump-toolbar">
+            <span id="dump-stats-counter">${words} words • ${chars} characters</span>
+            <span>Auto-saved locally</span>
+          </div>
+          <textarea id="brain-dump-input" class="brain-dump-textarea" placeholder="Start typing thoughts, paste snippets, or clear cognitive clutter...">${savedText}</textarea>
+        </div>
+      </div>
+    `;
+
+    const textarea = container.querySelector('#brain-dump-input');
+    const counter = container.querySelector('#dump-stats-counter');
+
+    textarea?.addEventListener('input', () => {
+      const val = textarea.value;
+      localStorage.setItem('zenith_braindump_content', val);
+      const w = val.trim() ? val.trim().split(/\s+/).length : 0;
+      if (counter) counter.textContent = `${w} words • ${val.length} characters`;
+    });
+
+    container.querySelector('#btn-copy-dump')?.addEventListener('click', () => {
+      if (textarea && textarea.value) {
+        navigator.clipboard.writeText(textarea.value);
+        this.showToast('Copied to clipboard', 'success');
+      }
+    });
+
+    container.querySelector('#btn-clear-dump')?.addEventListener('click', () => {
+      if (textarea && confirm('Clear scratchpad content?')) {
+        textarea.value = '';
+        localStorage.removeItem('zenith_braindump_content');
+        if (counter) counter.textContent = '0 words • 0 characters';
+        this.showToast('Scratchpad cleared', 'info');
+      }
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  // 2. Focus Timer
+  renderFocusTimer() {
+    const container = document.getElementById('focus-timer-view-content');
+    if (!container) return;
+
+    if (!this.timerState) {
+      this.timerState = {
+        mode: 'focus',
+        totalSeconds: 25 * 60,
+        remainingSeconds: 25 * 60,
+        isRunning: false,
+        intervalId: null
+      };
+    }
+
+    const formatTime = (secs) => {
+      const m = Math.floor(secs / 60).toString().padStart(2, '0');
+      const s = (secs % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    };
+
+    container.innerHTML = `
+      <div class="tool-view-wrapper">
+        <div class="tool-header-card glass-panel">
+          <div>
+            <h2 class="tool-title"><i data-lucide="timer"></i> Focus Timer</h2>
+            <p class="tool-subtitle">Structured work intervals for uninterrupted productivity.</p>
+          </div>
+          <div class="timer-modes">
+            <button class="timer-mode-btn ${this.timerState.mode === 'focus' ? 'active' : ''}" data-mode="focus">Focus (25m)</button>
+            <button class="timer-mode-btn ${this.timerState.mode === 'short' ? 'active' : ''}" data-mode="short">Short Break (5m)</button>
+            <button class="timer-mode-btn ${this.timerState.mode === 'long' ? 'active' : ''}" data-mode="long">Long Break (15m)</button>
+          </div>
+        </div>
+
+        <div class="focus-timer-card glass-panel">
+          <div class="timer-display-ring ${this.timerState.isRunning ? 'running' : ''}" id="timer-ring">
+            <span class="timer-digits" id="timer-display-digits">${formatTime(this.timerState.remainingSeconds)}</span>
+            <span class="timer-label" id="timer-display-mode">${this.timerState.mode.toUpperCase()}</span>
+          </div>
+
+          <div class="timer-controls">
+            <button class="btn btn-primary btn-md" id="btn-timer-toggle" style="min-width: 140px;">
+              ${this.timerState.isRunning ? 'Pause' : 'Start Focus'}
+            </button>
+            <button class="btn btn-secondary btn-md" id="btn-timer-reset">Reset</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const digitsEl = container.querySelector('#timer-display-digits');
+    const ringEl = container.querySelector('#timer-ring');
+    const toggleBtn = container.querySelector('#btn-timer-toggle');
+
+    const updateDisplay = () => {
+      if (digitsEl) digitsEl.textContent = formatTime(this.timerState.remainingSeconds);
+    };
+
+    const stopTimer = () => {
+      if (this.timerState.intervalId) {
+        clearInterval(this.timerState.intervalId);
+        this.timerState.intervalId = null;
+      }
+      this.timerState.isRunning = false;
+      if (toggleBtn) toggleBtn.textContent = 'Start Focus';
+      if (ringEl) ringEl.classList.remove('running');
+    };
+
+    const startTimer = () => {
+      this.timerState.isRunning = true;
+      if (toggleBtn) toggleBtn.textContent = 'Pause';
+      if (ringEl) ringEl.classList.add('running');
+
+      this.timerState.intervalId = setInterval(() => {
+        if (this.timerState.remainingSeconds > 0) {
+          this.timerState.remainingSeconds--;
+          updateDisplay();
+        } else {
+          stopTimer();
+          sound.playChime();
+          this.showToast('Focus session complete!', 'success');
+        }
+      }, 1000);
+    };
+
+    toggleBtn?.addEventListener('click', () => {
+      if (this.timerState.isRunning) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+    });
+
+    container.querySelector('#btn-timer-reset')?.addEventListener('click', () => {
+      stopTimer();
+      const mins = this.timerState.mode === 'focus' ? 25 : (this.timerState.mode === 'short' ? 5 : 15);
+      this.timerState.totalSeconds = mins * 60;
+      this.timerState.remainingSeconds = mins * 60;
+      updateDisplay();
+    });
+
+    container.querySelectorAll('.timer-mode-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        stopTimer();
+        const mode = e.currentTarget.dataset.mode;
+        this.timerState.mode = mode;
+        const mins = mode === 'focus' ? 25 : (mode === 'short' ? 5 : 15);
+        this.timerState.totalSeconds = mins * 60;
+        this.timerState.remainingSeconds = mins * 60;
+        this.renderFocusTimer();
+      });
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  // 3. Eisenhower Matrix
+  renderEisenhower() {
+    const container = document.getElementById('eisenhower-view-content');
+    if (!container) return;
+
+    let tasks = [];
+    try {
+      tasks = JSON.parse(localStorage.getItem('zenith_eisenhower_tasks') || '[]');
+    } catch {
+      tasks = [];
+    }
+
+    if (tasks.length === 0) {
+      tasks = [
+        { id: '1', title: 'Complete Bioengineering Deliverable', quadrant: 'q1', done: false },
+        { id: '2', title: 'Schedule Algorithms Exam Review', quadrant: 'q2', done: false },
+        { id: '3', title: 'Batch respond to administrative emails', quadrant: 'q3', done: false },
+        { id: '4', title: 'Organize desktop browser bookmarks', quadrant: 'q4', done: true }
+      ];
+      localStorage.setItem('zenith_eisenhower_tasks', JSON.stringify(tasks));
+    }
+
+    const quadrants = [
+      { id: 'q1', name: 'Urgent & Important', badge: 'badge-q1', sub: 'Do Immediately' },
+      { id: 'q2', name: 'Not Urgent & Important', badge: 'badge-q2', sub: 'Schedule' },
+      { id: 'q3', name: 'Urgent & Not Important', badge: 'badge-q3', sub: 'Delegate / Batch' },
+      { id: 'q4', name: 'Not Urgent & Not Important', badge: 'badge-q4', sub: 'Eliminate' }
+    ];
+
+    container.innerHTML = `
+      <div class="tool-view-wrapper">
+        <div class="tool-header-card glass-panel">
+          <div>
+            <h2 class="tool-title"><i data-lucide="grid"></i> Eisenhower Matrix</h2>
+            <p class="tool-subtitle">Prioritize tasks by urgency and long-term significance.</p>
+          </div>
+        </div>
+
+        <div class="eisenhower-grid">
+          ${quadrants.map(q => {
+            const qTasks = tasks.filter(t => t.quadrant === q.id);
+            return `
+              <div class="quadrant-card glass-panel" data-quadrant="${q.id}">
+                <div class="quadrant-header">
+                  <div>
+                    <h4 style="font-size: 0.95rem; font-weight: 600;">${q.name}</h4>
+                    <span style="font-size: 0.74rem; color: var(--text-muted);">${q.sub}</span>
+                  </div>
+                  <span class="quadrant-badge ${q.badge}">${qTasks.filter(t => !t.done).length} Pending</span>
+                </div>
+
+                <div class="quadrant-task-list">
+                  ${qTasks.map(t => `
+                    <div class="quadrant-task-item ${t.done ? 'done' : ''}" data-id="${t.id}">
+                      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1;">
+                        <input type="checkbox" class="task-checkbox" data-id="${t.id}" ${t.done ? 'checked' : ''} />
+                        <span>${t.title}</span>
+                      </label>
+                      <button class="btn-icon btn-delete-matrix-task" data-id="${t.id}" title="Remove task">✕</button>
+                    </div>
+                  `).join('') || '<div class="empty-state-sm">No items in this quadrant.</div>'}
+                </div>
+
+                <form class="quadrant-add-form" data-quadrant="${q.id}">
+                  <input type="text" placeholder="Add task..." required class="form-input-sm" style="flex: 1;" />
+                  <button type="submit" class="btn btn-secondary btn-sm">+</button>
+                </form>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    container.querySelectorAll('.task-checkbox').forEach(chk => {
+      chk.addEventListener('change', (e) => {
+        const id = e.target.dataset.id;
+        const task = tasks.find(t => t.id === id);
+        if (task) {
+          task.done = e.target.checked;
+          localStorage.setItem('zenith_eisenhower_tasks', JSON.stringify(tasks));
+          this.renderEisenhower();
+        }
+      });
+    });
+
+    container.querySelectorAll('.btn-delete-matrix-task').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = e.target.dataset.id;
+        tasks = tasks.filter(t => t.id !== id);
+        localStorage.setItem('zenith_eisenhower_tasks', JSON.stringify(tasks));
+        this.renderEisenhower();
+      });
+    });
+
+    container.querySelectorAll('.quadrant-add-form').forEach(form => {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const input = form.querySelector('input');
+        const title = input.value.trim();
+        const qId = form.dataset.quadrant;
+        if (title) {
+          tasks.push({ id: 'task_' + Date.now(), title, quadrant: qId, done: false });
+          localStorage.setItem('zenith_eisenhower_tasks', JSON.stringify(tasks));
+          this.renderEisenhower();
+        }
+      });
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  // 4. Breathwork Pacer
+  renderBreathwork() {
+    const container = document.getElementById('breathwork-view-content');
+    if (!container) return;
+
+    if (!this.breathState) {
+      this.breathState = {
+        isRunning: false,
+        intervalId: null,
+        cycles: 0,
+        phase: 'Ready',
+        countdown: 4
+      };
+    }
+
+    container.innerHTML = `
+      <div class="tool-view-wrapper">
+        <div class="tool-header-card glass-panel">
+          <div>
+            <h2 class="tool-title"><i data-lucide="wind"></i> Breathwork Pacer</h2>
+            <p class="tool-subtitle">Box breathing (4-4-4-4) to regulate autonomic nervous system states.</p>
+          </div>
+          <span class="stat-badge badge-emerald" id="breath-cycle-badge">Cycles Completed: ${this.breathState.cycles}</span>
+        </div>
+
+        <div class="breathwork-card glass-panel">
+          <div class="breathwork-circle-wrap">
+            <div class="breathwork-circle" id="breath-circle">
+              <span class="breathwork-phase-lbl" id="breath-phase">${this.breathState.phase}</span>
+              <span class="breathwork-sec-lbl" id="breath-seconds">${this.breathState.countdown}s</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px;">
+            <button class="btn btn-primary btn-md" id="btn-breath-toggle" style="min-width: 140px;">
+              ${this.breathState.isRunning ? 'Pause Pacer' : 'Begin Pacing'}
+            </button>
+            <button class="btn btn-secondary btn-md" id="btn-breath-reset">Reset</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const circleEl = container.querySelector('#breath-circle');
+    const phaseEl = container.querySelector('#breath-phase');
+    const secEl = container.querySelector('#breath-seconds');
+    const toggleBtn = container.querySelector('#btn-breath-toggle');
+    const cycleBadge = container.querySelector('#breath-cycle-badge');
+
+    const phases = [
+      { name: 'Inhale', duration: 4, scale: 'scale(1.35)' },
+      { name: 'Hold', duration: 4, scale: 'scale(1.35)' },
+      { name: 'Exhale', duration: 4, scale: 'scale(1.0)' },
+      { name: 'Hold', duration: 4, scale: 'scale(1.0)' }
+    ];
+
+    let currentPhaseIndex = 0;
+    let secLeft = 4;
+
+    const stopPacer = () => {
+      if (this.breathState.intervalId) {
+        clearInterval(this.breathState.intervalId);
+        this.breathState.intervalId = null;
+      }
+      this.breathState.isRunning = false;
+      if (toggleBtn) toggleBtn.textContent = 'Begin Pacing';
+      if (phaseEl) phaseEl.textContent = 'Ready';
+      if (circleEl) circleEl.style.transform = 'scale(1.0)';
+    };
+
+    const startPacer = () => {
+      this.breathState.isRunning = true;
+      if (toggleBtn) toggleBtn.textContent = 'Pause Pacer';
+      currentPhaseIndex = 0;
+      secLeft = phases[0].duration;
+
+      if (phaseEl) phaseEl.textContent = phases[0].name;
+      if (circleEl) circleEl.style.transform = phases[0].scale;
+      if (secEl) secEl.textContent = `${secLeft}s`;
+
+      this.breathState.intervalId = setInterval(() => {
+        secLeft--;
+        if (secLeft <= 0) {
+          currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
+          if (currentPhaseIndex === 0) {
+            this.breathState.cycles++;
+            if (cycleBadge) cycleBadge.textContent = `Cycles Completed: ${this.breathState.cycles}`;
+            sound.playChime();
+          }
+          const curr = phases[currentPhaseIndex];
+          secLeft = curr.duration;
+          if (phaseEl) phaseEl.textContent = curr.name;
+          if (circleEl) circleEl.style.transform = curr.scale;
+        }
+        if (secEl) secEl.textContent = `${secLeft}s`;
+      }, 1000);
+    };
+
+    toggleBtn?.addEventListener('click', () => {
+      if (this.breathState.isRunning) {
+        stopPacer();
+      } else {
+        startPacer();
+      }
+    });
+
+    container.querySelector('#btn-breath-reset')?.addEventListener('click', () => {
+      stopPacer();
+      this.breathState.cycles = 0;
+      if (cycleBadge) cycleBadge.textContent = 'Cycles Completed: 0';
+      if (secEl) secEl.textContent = '4s';
+    });
+
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  // 5. Universal Converter
+  renderConverter() {
+    const container = document.getElementById('converter-view-content');
+    if (!container) return;
+
+    const conversions = {
+      length: {
+        units: ['Meters', 'Kilometers', 'Feet', 'Inches', 'Miles'],
+        toBase: { Meters: 1, Kilometers: 1000, Feet: 0.3048, Inches: 0.0254, Miles: 1609.34 }
+      },
+      weight: {
+        units: ['Kilograms', 'Grams', 'Pounds', 'Ounces'],
+        toBase: { Kilograms: 1, Grams: 0.001, Pounds: 0.453592, Ounces: 0.0283495 }
+      },
+      data: {
+        units: ['Megabytes', 'Gigabytes', 'Terabytes', 'Kilobytes'],
+        toBase: { Megabytes: 1, Gigabytes: 1024, Terabytes: 1048576, Kilobytes: 0.0009765625 }
+      }
+    };
+
+    let activeCategory = 'length';
+
+    const renderForm = (catKey) => {
+      const cat = conversions[catKey];
+      return `
+        <div class="converter-card glass-panel">
+          <div class="converter-tabs">
+            <button class="converter-tab-btn ${catKey === 'length' ? 'active' : ''}" data-cat="length">Length</button>
+            <button class="converter-tab-btn ${catKey === 'weight' ? 'active' : ''}" data-cat="weight">Weight & Mass</button>
+            <button class="converter-tab-btn ${catKey === 'data' ? 'active' : ''}" data-cat="data">Digital Data</button>
+          </div>
+
+          <div class="converter-row">
+            <div class="form-group" style="margin: 0;">
+              <label>From</label>
+              <input type="number" id="conv-from-val" value="1" step="any" class="form-input" />
+              <select id="conv-from-unit" class="form-select" style="margin-top: 8px;">
+                ${cat.units.map(u => `<option value="${u}">${u}</option>`).join('')}
+              </select>
+            </div>
+
+            <div class="converter-swap-icon">
+              <i data-lucide="arrow-left-right"></i>
+            </div>
+
+            <div class="form-group" style="margin: 0;">
+              <label>To Result</label>
+              <input type="number" id="conv-to-val" readonly class="form-input" style="background: var(--bg-card);" />
+              <select id="conv-to-unit" class="form-select" style="margin-top: 8px;">
+                ${cat.units.map((u, i) => `<option value="${u}" ${i === 1 ? 'selected' : ''}>${u}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    container.innerHTML = `
+      <div class="tool-view-wrapper">
+        <div class="tool-header-card glass-panel">
+          <div>
+            <h2 class="tool-title"><i data-lucide="arrow-left-right"></i> Universal Converter</h2>
+            <p class="tool-subtitle">Instant precision conversion between scientific and everyday units.</p>
+          </div>
+        </div>
+        <div id="converter-mount">
+          ${renderForm(activeCategory)}
+        </div>
+      </div>
+    `;
+
+    const calculate = () => {
+      const fromVal = parseFloat(container.querySelector('#conv-from-val')?.value || 0);
+      const fromUnit = container.querySelector('#conv-from-unit')?.value;
+      const toUnit = container.querySelector('#conv-to-unit')?.value;
+      const toValInput = container.querySelector('#conv-to-val');
+      if (!toValInput) return;
+
+      const cat = conversions[activeCategory];
+      const baseValue = fromVal * cat.toBase[fromUnit];
+      const result = baseValue / cat.toBase[toUnit];
+      toValInput.value = parseFloat(result.toFixed(6));
+    };
+
+    const attachConvEvents = () => {
+      container.querySelector('#conv-from-val')?.addEventListener('input', calculate);
+      container.querySelector('#conv-from-unit')?.addEventListener('change', calculate);
+      container.querySelector('#conv-to-unit')?.addEventListener('change', calculate);
+
+      container.querySelectorAll('.converter-tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          activeCategory = e.currentTarget.dataset.cat;
+          const mount = container.querySelector('#converter-mount');
+          if (mount) {
+            mount.innerHTML = renderForm(activeCategory);
+            attachConvEvents();
+            calculate();
+            if (window.lucide) window.lucide.createIcons();
+          }
+        });
+      });
+    };
+
+    attachConvEvents();
+    calculate();
+    if (window.lucide) window.lucide.createIcons();
+  }
+
   // --- Toast Notification System ---
   showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
@@ -4312,7 +4840,7 @@ class ZenithApp {
 
     const toast = document.createElement('div');
     toast.className = `toast-message toast-${type}`;
-    const icons = { success: '✓', error: '⚠️', info: '💡' };
+    const icons = { success: '✓', error: '!', info: 'i' };
     toast.innerHTML = `
       <span class="toast-icon">${icons[type] || '•'}</span>
       <span class="toast-text">${message}</span>

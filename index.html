@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="description" content="Zenith • Polished Personal Productivity, Atomic Habits, Nutrition and Academic Dashboard.">
-  <meta name="theme-color" content="#0e1315">
-  <title>Zenith • Life & Wellness OS</title>
+  <meta name="description" content="Zenith • Premium Daily Toolkit for Mankind. Habits, Nutrition, Focus, and Knowledge.">
+  <meta name="theme-color" content="#09090b">
+  <title>Zenith • Daily Toolkit for Mankind</title>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%2309090b%22/><path d=%22M28 30 L72 30 L28 70 L72 70%22 stroke=%22%2310b981%22 stroke-width=%2212%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 fill=%22none%22/></svg>">
 </head>
 <body>
 
@@ -25,46 +27,80 @@
     <aside id="app-sidebar" aria-label="Main Navigation">
       <div class="sidebar-brand">
         <div class="brand-icon-mark">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
           </svg>
         </div>
         <div class="brand-text">
           <h1>Zenith</h1>
-          <span class="brand-tagline">Life & Wellness OS</span>
+          <span class="brand-tagline">Toolkit for Mankind</span>
         </div>
       </div>
 
       <nav class="sidebar-nav">
+        <!-- Group: Core -->
+        <div class="nav-group-title">Core</div>
+
         <button class="nav-link active" data-view="overview" id="nav-overview">
-          <span class="nav-icon">📊</span>
-          <span>Overview</span>
+          <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
+          <span>Dashboard</span>
         </button>
 
         <button class="nav-link" data-view="habits" id="nav-habits">
-          <span class="nav-icon">🔥</span>
-          <span>Habit Tracker</span>
+          <span class="nav-icon"><i data-lucide="check-square"></i></span>
+          <span>Daily Habits</span>
         </button>
 
         <button class="nav-link" data-view="nutrition" id="nav-nutrition">
-          <span class="nav-icon">🥗</span>
-          <span>Food & Nutrition</span>
+          <span class="nav-icon"><i data-lucide="apple"></i></span>
+          <span>Nutrition</span>
         </button>
 
         <button class="nav-link" data-view="academics" id="nav-academics">
-          <span class="nav-icon">🎓</span>
+          <span class="nav-icon"><i data-lucide="graduation-cap"></i></span>
           <span>Academic Hub</span>
         </button>
 
+        <!-- Group: Work & Mind -->
+        <div class="nav-group-title">Work & Mind</div>
+
+        <button class="nav-link" data-view="brain-dump" id="nav-brain-dump">
+          <span class="nav-icon"><i data-lucide="brain"></i></span>
+          <span>Brain Dump</span>
+        </button>
+
+        <button class="nav-link" data-view="focus-timer" id="nav-focus-timer">
+          <span class="nav-icon"><i data-lucide="timer"></i></span>
+          <span>Focus Timer</span>
+        </button>
+
+        <button class="nav-link" data-view="eisenhower" id="nav-eisenhower">
+          <span class="nav-icon"><i data-lucide="grid"></i></span>
+          <span>Eisenhower Matrix</span>
+        </button>
+
+        <!-- Group: Wellness & Utility -->
+        <div class="nav-group-title">Wellness & Utility</div>
+
+        <button class="nav-link" data-view="breathwork" id="nav-breathwork">
+          <span class="nav-icon"><i data-lucide="wind"></i></span>
+          <span>Breathwork Pacer</span>
+        </button>
+
+        <button class="nav-link" data-view="converter" id="nav-converter">
+          <span class="nav-icon"><i data-lucide="arrow-left-right"></i></span>
+          <span>Universal Converter</span>
+        </button>
+
         <button class="nav-link" data-view="settings" id="nav-settings">
-          <span class="nav-icon">⚙️</span>
+          <span class="nav-icon"><i data-lucide="settings"></i></span>
           <span>Preferences</span>
         </button>
       </nav>
 
       <div class="sidebar-footer">
         <div class="sidebar-user-pill" id="header-profile-btn" role="button" tabindex="0" title="Switch or manage account">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar-img" id="header-user-avatar" width="38" height="38" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar-img" id="header-user-avatar" width="36" height="36">
           <div class="user-info">
             <span class="user-display-name" id="header-user-name">Alex Chen</span>
             <span class="user-role-lbl" id="header-user-role">CS & Bioengineering</span>
@@ -86,26 +122,24 @@
 
         <div class="header-right">
           <button class="btn-header-action" id="btn-toggle-theme" title="Cycle color themes (Sage, Obsidian, Light, Ocean)">
-            <span>🎨</span>
+            <i data-lucide="palette"></i>
             <span class="hide-mobile">Theme</span>
           </button>
 
           <button class="btn-header-action" id="btn-header-account" onclick="window.zenith.openAuthModal()">
-            <span>👤</span>
+            <i data-lucide="user"></i>
             <span class="hide-mobile">Account</span>
           </button>
         </div>
       </header>
 
-      <!-- Persistent Philosophical Motivational Banner -->
-      <section class="motivational-banner glass-panel" id="motivational-banner" aria-label="Daily Motivational Reflection">
+      <!-- Persistent Philosophical Reflection Banner -->
+      <section class="motivational-banner glass-panel" id="motivational-banner" aria-label="Daily Reflection">
         <div class="quote-header-row">
           <span class="quote-category">Resilience</span>
-          <button class="btn-spark" id="btn-spark-quote" title="Spark another thought">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
-            </svg>
-            <span>Spark Another</span>
+          <button class="btn-spark" id="btn-spark-quote" title="Spark another reflection">
+            <i data-lucide="sparkles"></i>
+            <span>Next Reflection</span>
           </button>
         </div>
 
@@ -119,7 +153,7 @@
       <!-- View Containers Area -->
       <div class="views-container">
 
-        <!-- 1. Overview View -->
+        <!-- 1. Overview / Dashboard View -->
         <section id="view-overview" class="app-view active">
           <div id="overview-view-content"></div>
         </section>
@@ -144,34 +178,59 @@
           <div id="settings-view-content"></div>
         </section>
 
+        <!-- 6. Brain Dump (Scratchpad) View -->
+        <section id="view-brain-dump" class="app-view">
+          <div id="brain-dump-view-content"></div>
+        </section>
+
+        <!-- 7. Focus Timer View -->
+        <section id="view-focus-timer" class="app-view">
+          <div id="focus-timer-view-content"></div>
+        </section>
+
+        <!-- 8. Eisenhower Matrix View -->
+        <section id="view-eisenhower" class="app-view">
+          <div id="eisenhower-view-content"></div>
+        </section>
+
+        <!-- 9. Breathwork Pacer View -->
+        <section id="view-breathwork" class="app-view">
+          <div id="breathwork-view-content"></div>
+        </section>
+
+        <!-- 10. Universal Converter View -->
+        <section id="view-converter" class="app-view">
+          <div id="converter-view-content"></div>
+        </section>
+
       </div>
     </main>
 
     <!-- Mobile Bottom Navigation Bar -->
     <nav id="mobile-bottom-nav" aria-label="Mobile Navigation">
       <button class="mobile-nav-btn active" data-view="overview">
-        <span class="m-icon">📊</span>
+        <span class="m-icon"><i data-lucide="layout-dashboard"></i></span>
         <span>Today</span>
       </button>
 
       <button class="mobile-nav-btn" data-view="habits">
-        <span class="m-icon">🔥</span>
+        <span class="m-icon"><i data-lucide="check-square"></i></span>
         <span>Habits</span>
       </button>
 
       <button class="mobile-nav-btn" data-view="nutrition">
-        <span class="m-icon">🥗</span>
-        <span>Nutrition</span>
+        <span class="m-icon"><i data-lucide="apple"></i></span>
+        <span>Food</span>
       </button>
 
-      <button class="mobile-nav-btn" data-view="academics">
-        <span class="m-icon">🎓</span>
-        <span>Academics</span>
+      <button class="mobile-nav-btn" data-view="focus-timer">
+        <span class="m-icon"><i data-lucide="timer"></i></span>
+        <span>Timer</span>
       </button>
 
       <button class="mobile-nav-btn" data-view="settings">
-        <span class="m-icon">⚙️</span>
-        <span>Settings</span>
+        <span class="m-icon"><i data-lucide="settings"></i></span>
+        <span>Config</span>
       </button>
     </nav>
 
@@ -184,7 +243,7 @@
   <!-- 1. Habit Modal -->
   <dialog id="habit-dialog" aria-labelledby="habit-modal-title">
     <div class="dialog-header">
-      <h3 id="habit-modal-title">Forge a New Habit</h3>
+      <h3 id="habit-modal-title">Create Habit</h3>
       <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
     </div>
     <div class="dialog-body">
@@ -195,7 +254,7 @@
         </div>
 
         <div class="form-group">
-          <label for="habit-input-category">Life Domain</label>
+          <label for="habit-input-category">Category</label>
           <select id="habit-input-category" class="form-select">
             <option value="Mind & Body">Mind & Body</option>
             <option value="Productivity">Productivity</option>
@@ -208,25 +267,25 @@
         <div class="form-group">
           <label for="habit-input-icon">Icon Symbol</label>
           <select id="habit-input-icon" class="form-select">
-            <option value="🧘">🧘 Mindfulness</option>
-            <option value="💻">💻 Deep Work</option>
-            <option value="💧">💧 Hydration</option>
-            <option value="📖">📖 Reading</option>
-            <option value="🏋️">🏋️ Fitness</option>
-            <option value="🌙">🌙 Sleep & Wind-down</option>
-            <option value="🥗">🥗 Clean Eating</option>
-            <option value="✍️">✍️ Journaling</option>
-            <option value="🎯">🎯 Focus</option>
+            <option value="wind">Wind / Breathwork</option>
+            <option value="code">Code / Deep Work</option>
+            <option value="droplets">Droplets / Hydration</option>
+            <option value="book-open">Book / Reading</option>
+            <option value="dumbbell">Dumbbell / Fitness</option>
+            <option value="moon">Moon / Sleep</option>
+            <option value="apple">Apple / Nutrition</option>
+            <option value="pen-tool">Pen / Journaling</option>
+            <option value="target">Target / Focus</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="habit-input-time">Target Time of Day</label>
+          <label for="habit-input-time">Target Time</label>
           <input type="text" id="habit-input-time" placeholder="e.g. 08:00 AM or Evening" class="form-input">
         </div>
 
         <div class="form-group">
-          <label for="habit-input-freq">Cadence Frequency</label>
+          <label for="habit-input-freq">Frequency</label>
           <select id="habit-input-freq" class="form-select">
             <option value="Everyday">Everyday</option>
             <option value="Weekdays">Weekdays</option>
@@ -238,38 +297,38 @@
 
         <div class="form-group" id="habit-check-today-wrap">
           <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-            <input type="checkbox" id="habit-check-today" style="width: 18px; height: 18px;">
+            <input type="checkbox" id="habit-check-today" style="width: 16px; height: 16px;">
             <span>Mark completed for today immediately</span>
           </label>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
           <button type="button" class="btn btn-secondary btn-close-dialog">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Routine</button>
+          <button type="submit" class="btn btn-primary">Save Habit</button>
         </div>
       </form>
     </div>
   </dialog>
 
-  <!-- 2. Food & Nutrition Log Modal (Search, Photo Scan, Manual) -->
+  <!-- 2. Food & Nutrition Log Modal -->
   <dialog id="food-dialog" aria-labelledby="food-modal-title">
     <div class="dialog-header">
-      <h3 id="food-modal-title">Log Nourishment</h3>
+      <h3 id="food-modal-title">Log Meal</h3>
       <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
     </div>
     <div class="dialog-body">
       <!-- Modal Tabs -->
       <div class="modal-tabs">
-        <button class="modal-tab-btn active" data-tab="search">🔍 Search Catalog</button>
-        <button class="modal-tab-btn" data-tab="photo">📷 Photo Scan (Est.)</button>
-        <button class="modal-tab-btn" data-tab="manual">✍️ Custom Manual</button>
+        <button class="modal-tab-btn active" data-tab="search">Search Catalog</button>
+        <button class="modal-tab-btn" data-tab="photo">Photo Estimate</button>
+        <button class="modal-tab-btn" data-tab="manual">Custom Entry</button>
       </div>
 
       <!-- Tab 1: Search Database -->
       <div id="food-pane-search" class="food-tab-pane active">
         <div style="display: flex; gap: 10px; margin-bottom: 12px;">
           <div class="search-input-wrap" style="flex: 1;">
-            <input type="text" id="food-db-search-input" placeholder="Search avocado toast, grilled salmon, oats, smoothie..." class="search-field">
+            <input type="text" id="food-db-search-input" placeholder="Search avocado toast, grilled salmon, oats..." class="search-field">
           </div>
           <select id="food-db-meal-type" class="form-select-sm" style="width: 120px;">
             <option value="Breakfast">Breakfast</option>
@@ -281,24 +340,24 @@
         <div id="food-db-results-list" class="food-db-results-list"></div>
       </div>
 
-      <!-- Tab 2: Photo Scan (AI Visual Estimation) -->
+      <!-- Tab 2: Photo Scan -->
       <div id="food-pane-photo" class="food-tab-pane">
         <div class="modal-disclaimer-callout">
-          📷 <strong>Visual Portions Feature:</strong> Snap or select a dish photo to estimate volume, caloric density, and macronutrients. <em>Values are estimated approximations and not medically precise. Review and fine-tune portions before saving.</em>
+          <strong>Visual Portions Notice:</strong> Select a dish image to estimate volume and macronutrients. Values are approximations. Review and verify portions before saving.
         </div>
 
-        <label style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px;">
-          Try a Demo Meal Photo:
+        <label style="display: block; font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">
+          Preset Sample Meals:
         </label>
         <div id="photo-presets-mount" class="photo-presets-grid"></div>
 
         <div style="margin: 16px 0; text-align: center; color: var(--text-muted); font-size: 0.78rem;">
-          — OR UPLOAD / SNAP YOUR OWN PHOTO —
+          — OR UPLOAD IMAGE —
         </div>
 
         <div style="display: flex; justify-content: center; margin-bottom: 16px;">
           <label class="btn btn-secondary btn-sm" style="cursor: pointer;">
-            📷 Choose / Capture Image
+            Choose Image
             <input type="file" id="food-camera-input" accept="image/*" capture="environment" style="display: none;">
           </label>
         </div>
@@ -320,12 +379,12 @@
           </div>
 
           <div class="form-group">
-            <label for="food-manual-name">Food Name</label>
+            <label for="food-manual-name">Dish Name</label>
             <input type="text" id="food-manual-name" required placeholder="e.g. Chia Seed Pudding" class="form-input">
           </div>
 
           <div class="form-group">
-            <label for="food-manual-portion">Portion Size</label>
+            <label for="food-manual-portion">Portion</label>
             <input type="text" id="food-manual-portion" placeholder="e.g. 1 bowl (200g)" value="1 serving" class="form-input">
           </div>
 
@@ -360,7 +419,7 @@
           </div>
 
           <div class="form-actions-full">
-            <button type="submit" class="btn btn-primary btn-sm">Log Food Entry</button>
+            <button type="submit" class="btn btn-primary btn-sm">Save Meal</button>
           </div>
         </form>
       </div>
@@ -370,7 +429,7 @@
   <!-- 3. Course Modal -->
   <dialog id="course-dialog" aria-labelledby="course-modal-title">
     <div class="dialog-header">
-      <h3 id="course-modal-title">Enrolled Academic Course</h3>
+      <h3 id="course-modal-title">Academic Course</h3>
       <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
     </div>
     <div class="dialog-body">
@@ -386,12 +445,12 @@
         </div>
 
         <div class="form-group">
-          <label for="course-input-prof">Professor / Instructor</label>
+          <label for="course-input-prof">Instructor</label>
           <input type="text" id="course-input-prof" placeholder="Dr. Alan Turing" class="form-input">
         </div>
 
         <div class="form-group">
-          <label for="course-input-credits">Credit Weight</label>
+          <label for="course-input-credits">Credits</label>
           <input type="number" id="course-input-credits" value="4" min="1" max="12" class="form-input">
         </div>
 
@@ -415,13 +474,13 @@
         </div>
 
         <div class="form-group">
-          <label for="course-input-color">Badge Color Accent</label>
+          <label for="course-input-color">Color Accent</label>
           <select id="course-input-color" class="form-select">
-            <option value="#34d399">Emerald (#34d399)</option>
-            <option value="#38bdf8">Sky Blue (#38bdf8)</option>
-            <option value="#a78bfa">Lavender (#a78bfa)</option>
-            <option value="#fb7185">Rose Coral (#fb7185)</option>
-            <option value="#fbbf24">Amber Bronze (#fbbf24)</option>
+            <option value="#10b981">Emerald (#10b981)</option>
+            <option value="#3b82f6">Blue (#3b82f6)</option>
+            <option value="#8b5cf6">Purple (#8b5cf6)</option>
+            <option value="#f43f5e">Rose (#f43f5e)</option>
+            <option value="#f59e0b">Amber (#f59e0b)</option>
           </select>
         </div>
 
@@ -431,12 +490,12 @@
         </div>
 
         <div class="form-group" style="grid-column: 1 / -1;">
-          <label for="course-input-loc">Classroom Location</label>
+          <label for="course-input-loc">Location</label>
           <input type="text" id="course-input-loc" placeholder="Science Quad 214" class="form-input">
         </div>
 
         <div class="form-actions-full">
-          <button type="submit" class="btn btn-primary btn-sm">Enroll Course</button>
+          <button type="submit" class="btn btn-primary btn-sm">Save Course</button>
         </div>
       </form>
     </div>
@@ -457,7 +516,7 @@
 
         <div class="form-group">
           <label for="deadline-title">Title & Topic</label>
-          <input type="text" id="deadline-title" required placeholder="e.g. Midterm Examination / Project Deliverable" class="form-input">
+          <input type="text" id="deadline-title" required placeholder="e.g. Midterm Examination" class="form-input">
         </div>
 
         <div class="form-group">
@@ -476,22 +535,22 @@
         </div>
 
         <div class="form-group">
-          <label for="deadline-priority">Priority Urgency</label>
+          <label for="deadline-priority">Priority</label>
           <select id="deadline-priority" class="form-select">
-            <option value="High">High Priority</option>
-            <option value="Medium" selected>Medium Priority</option>
-            <option value="Low">Low Priority</option>
+            <option value="High">High</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="Low">Low</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="deadline-weight">Syllabus Grade Weight</label>
+          <label for="deadline-weight">Weight</label>
           <input type="text" id="deadline-weight" placeholder="e.g. 15% of final grade" value="15%" class="form-input">
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
           <button type="button" class="btn btn-secondary btn-close-dialog">Cancel</button>
-          <button type="submit" class="btn btn-primary">Schedule Deadline</button>
+          <button type="submit" class="btn btn-primary">Schedule Milestone</button>
         </div>
       </form>
     </div>
@@ -506,18 +565,18 @@
     <div class="dialog-body">
       <form id="due-form" class="photo-confirm-grid">
         <div class="form-group" style="grid-column: 1 / -1;">
-          <label for="due-input-title">Billing Title</label>
-          <input type="text" id="due-input-title" required placeholder="e.g. Semester Tuition Balance / Lab Fee" class="form-input">
+          <label for="due-input-title">Title</label>
+          <input type="text" id="due-input-title" required placeholder="e.g. Semester Tuition Balance" class="form-input">
         </div>
 
         <div class="form-group">
           <label for="due-input-category">Category</label>
           <select id="due-input-category" class="form-select">
-            <option value="Tuition">Tuition & Enrollment</option>
-            <option value="Lab Deposit">Lab Deposit / Consumables</option>
-            <option value="Union & Guilds">Student Union & Guilds</option>
-            <option value="Textbooks">Textbooks & Subscriptions</option>
-            <option value="Housing">Housing & Facilities</option>
+            <option value="Tuition">Tuition</option>
+            <option value="Lab Deposit">Lab Deposit</option>
+            <option value="Union & Guilds">Student Union</option>
+            <option value="Textbooks">Textbooks</option>
+            <option value="Housing">Housing</option>
           </select>
         </div>
 
@@ -527,7 +586,7 @@
         </div>
 
         <div class="form-group">
-          <label for="due-input-currency">Currency Symbol</label>
+          <label for="due-input-currency">Currency</label>
           <input type="text" id="due-input-currency" value="$" class="form-input">
         </div>
 
@@ -537,13 +596,13 @@
         </div>
 
         <div class="form-group" style="grid-column: 1 / -1;">
-          <label for="due-input-inst">Billing Office / Institution</label>
+          <label for="due-input-inst">Institution / Office</label>
           <input type="text" id="due-input-inst" placeholder="e.g. University Bursar Office" class="form-input">
         </div>
 
         <div class="form-group" style="grid-column: 1 / -1;">
-          <label for="due-input-notes">Invoice / Reference Notes</label>
-          <input type="text" id="due-input-notes" placeholder="Invoice # or receipt reference" class="form-input">
+          <label for="due-input-notes">Invoice Notes</label>
+          <input type="text" id="due-input-notes" placeholder="Invoice # or reference" class="form-input">
         </div>
 
         <div class="form-actions-full">
@@ -553,7 +612,7 @@
     </div>
   </dialog>
 
-  <!-- 6. Note Upload / Create Modal -->
+  <!-- 6. Note Create Modal -->
   <dialog id="note-dialog" aria-labelledby="note-modal-title">
     <div class="dialog-header">
       <h3 id="note-modal-title">Save Note or Document</h3>
@@ -567,12 +626,12 @@
         </div>
 
         <div class="form-group">
-          <label for="note-course-select">Course Subject</label>
+          <label for="note-course-select">Course</label>
           <select id="note-course-select" class="form-select"></select>
         </div>
 
         <div class="form-group">
-          <label for="note-folder-select">Folder Classification</label>
+          <label for="note-folder-select">Classification</label>
           <select id="note-folder-select" class="form-select">
             <option value="Lecture Notes">Lecture Notes</option>
             <option value="Study Guides">Study Guides</option>
@@ -582,19 +641,19 @@
         </div>
 
         <div class="form-group">
-          <label for="note-tags">Tags (comma-separated)</label>
+          <label for="note-tags">Tags</label>
           <input type="text" id="note-tags" placeholder="Algorithms, Recursion, Midterm" class="form-input">
         </div>
 
         <div class="form-group">
-          <label for="note-content">Summary & Key Concepts (Markdown supported)</label>
+          <label for="note-content">Summary & Key Concepts</label>
           <textarea id="note-content" rows="6" placeholder="Enter key formulas, theorems, and bullet insights..." class="form-textarea"></textarea>
         </div>
 
         <div class="form-group">
-          <label for="note-attachment-file">Upload PDF or Image Attachment</label>
+          <label for="note-attachment-file">Upload Attachment</label>
           <input type="file" id="note-attachment-file" accept=".pdf, image/*" class="form-input">
-          <small style="color: var(--text-muted); font-size: 0.72rem; margin-top: 4px;">Supports PDF lecture slides, diagram screenshots, and handwritten notes.</small>
+          <small style="color: var(--text-muted); font-size: 0.72rem; margin-top: 4px;">Supports PDF lecture slides and diagrams.</small>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
@@ -605,7 +664,7 @@
     </div>
   </dialog>
 
-  <!-- 7. Note Reader & Document Preview Dialog -->
+  <!-- 7. Note Reader Preview Dialog -->
   <dialog id="note-preview-dialog" aria-labelledby="preview-note-title" style="max-width: 720px;">
     <div class="dialog-header">
       <h3 id="preview-note-title">Document Reader</h3>
@@ -614,35 +673,34 @@
     <div class="dialog-body">
       <div class="note-preview-meta">
         <span id="preview-note-course" class="course-mini-tag">CS 341</span>
-        <span id="preview-note-folder">📁 Folder</span>
-        <span id="preview-note-date">🗓️ Date</span>
+        <span id="preview-note-folder">Folder</span>
+        <span id="preview-note-date">Date</span>
       </div>
 
       <div id="preview-note-body" class="preview-body-prose"></div>
-
       <div id="preview-note-attachment" style="display: none;"></div>
     </div>
   </dialog>
 
-  <!-- 8. Multi-User Authentication & Account Switcher Modal -->
+  <!-- 8. User Authentication & Profile Dialog -->
   <dialog id="auth-dialog" aria-labelledby="auth-modal-title">
     <div class="dialog-header">
-      <h3 id="auth-modal-title">Account & Multi-User Profiles</h3>
+      <h3 id="auth-modal-title">Account & Profiles</h3>
       <button class="btn-icon btn-close-dialog" aria-label="Close dialog">✕</button>
     </div>
     <div class="dialog-body">
       <!-- 1-Click Instant Demo Button -->
-      <div style="background: rgba(52, 211, 153, 0.08); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 20px; text-align: center;">
-        <h4 style="font-size: 0.95rem; margin-bottom: 4px;">🚀 Instant Showcase Experience</h4>
-        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 10px;">Load the rich pre-populated demo session with habits, meals, courses, notes, and dues.</p>
+      <div style="background: rgba(16, 185, 129, 0.05); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px; text-align: center;">
+        <h4 style="font-size: 0.95rem; margin-bottom: 4px; font-weight: 600;">Showcase Demo Account</h4>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">Experience Zenith OS with pre-populated daily habits, nutrition records, courses, and dues.</p>
         <button class="btn btn-primary btn-sm" id="btn-auth-demo-instant">
-          Try Demo Account (Alex Chen)
+          Load Demo Account (Alex Chen)
         </button>
       </div>
 
       <!-- Existing Users Switcher -->
       <div style="margin-bottom: 22px;">
-        <h4 style="font-size: 0.88rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Saved Profiles On This Device</h4>
+        <h4 style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Saved Profiles</h4>
         <div id="auth-existing-users-list"></div>
       </div>
 
@@ -650,7 +708,7 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-top: 1px solid var(--border-subtle); padding-top: 18px;">
         <!-- Login Form -->
         <form id="auth-login-form">
-          <h4 style="font-size: 0.95rem; margin-bottom: 12px;">Sign In</h4>
+          <h4 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 600;">Sign In</h4>
           <div class="form-group">
             <label for="auth-login-email">Email</label>
             <input type="email" id="auth-login-email" required placeholder="you@university.edu" class="form-input-sm">
@@ -665,7 +723,7 @@
 
         <!-- Sign Up Form -->
         <form id="auth-signup-form">
-          <h4 style="font-size: 0.95rem; margin-bottom: 12px;">Create New Account</h4>
+          <h4 style="font-size: 0.95rem; margin-bottom: 12px; font-weight: 600;">Create Account</h4>
           <div class="form-group">
             <label for="auth-signup-name">Full Name</label>
             <input type="text" id="auth-signup-name" required placeholder="Jordan Lee" class="form-input-sm">
@@ -684,7 +742,7 @@
     </div>
   </dialog>
 
-  <!-- Standalone Universal Application Bootstrap -->
+  <!-- Universal Application Bootstrap -->
   <script src="zenith.js"></script>
 </body>
 </html>
