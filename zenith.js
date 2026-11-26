@@ -3052,9 +3052,9 @@ class ZenithApp {
   updateSyncStatus() {
     const el = document.getElementById('cloud-sync-status');
     if (!el) return;
-    el.innerHTML = '<span class="sync-dot pulsing"></span> Cloud Synced • Just now';
+    el.innerHTML = '<span class="sync-dot pulsing"></span> Saved locally • Just now';
     setTimeout(() => {
-      if (el) el.innerHTML = '<span class="sync-dot"></span> Cloud Synced';
+      if (el) el.innerHTML = '<span class="sync-dot"></span> Saved locally';
     }, 2000);
   }
 
@@ -3228,7 +3228,7 @@ class ZenithApp {
       <!-- Core Vitals Summary Cards (Responsive 4-Grid) -->
       <div class="stats-grid">
         <!-- Habits Today -->
-        <div class="stat-card glass-panel cursor-pointer" id="dash-card-habits">
+        <button type="button" class="stat-card glass-panel cursor-pointer" id="dash-card-habits" aria-label="Open daily habits, ${habitStats.completedToday} of ${habitStats.total} complete">
           <div class="stat-header">
             <span class="stat-title">Habits Done</span>
             <span class="stat-icon"></span>
@@ -3240,10 +3240,10 @@ class ZenithApp {
           <div class="progress-bar-track">
             <div class="progress-bar-fill progress-emerald" style="width: ${habitStats.percentage}%;"></div>
           </div>
-        </div>
+        </button>
 
         <!-- Calories Remaining -->
-        <div class="stat-card glass-panel cursor-pointer" id="dash-card-nutrition">
+        <button type="button" class="stat-card glass-panel cursor-pointer" id="dash-card-nutrition" aria-label="Open nutrition journal, ${nutritionTotals.calories} calories consumed">
           <div class="stat-header">
             <span class="stat-title">Energy Consumed</span>
             <span class="stat-icon"><i data-lucide="apple"></i></span>
@@ -3257,10 +3257,10 @@ class ZenithApp {
           <div class="progress-bar-track">
             <div class="progress-bar-fill progress-amber" style="width: ${Math.min(100, Math.round((nutritionTotals.calories / nutritionGoals.calories) * 100))}%;"></div>
           </div>
-        </div>
+        </button>
 
         <!-- Academic Standing -->
-        <div class="stat-card glass-panel cursor-pointer" id="dash-card-academics">
+        <button type="button" class="stat-card glass-panel cursor-pointer" id="dash-card-academics" aria-label="Open academic courses, GPA ${gpaInfo.gpa}">
           <div class="stat-header">
             <span class="stat-title">Current GPA</span>
             <span class="stat-icon"><i data-lucide="graduation-cap"></i></span>
@@ -3270,10 +3270,10 @@ class ZenithApp {
             <div class="stat-sub">${pendingDeadlines.length} pending deadlines</div>
           </div>
           <div class="stat-badge badge-blue">${academics.courses.length} Active Courses</div>
-        </div>
+        </button>
 
         <!-- Financial Status -->
-        <div class="stat-card glass-panel cursor-pointer" id="dash-card-dues">
+        <button type="button" class="stat-card glass-panel cursor-pointer" id="dash-card-dues" aria-label="Open pending dues, $${pendingDuesAmount.toFixed(2)} outstanding">
           <div class="stat-header">
             <span class="stat-title">Pending Dues</span>
             <span class="stat-icon"><i data-lucide="credit-card"></i></span>
@@ -3287,7 +3287,7 @@ class ZenithApp {
           <div class="stat-badge ${pendingDuesAmount > 0 ? 'badge-amber' : 'badge-emerald'}">
             ${pendingDuesAmount > 0 ? 'Action required' : 'All clear'}
           </div>
-        </div>
+        </button>
       </div>
 
       <!-- Main Dashboard Grid Layout -->
