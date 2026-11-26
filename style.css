@@ -3358,20 +3358,62 @@ dialog::backdrop {
     grid-template-columns: 1.8fr 2fr 0.8fr;
   }
 
-  .habit-row {
-    grid-template-columns: 1.8fr 2fr 0.8fr;
-    padding: 12px 14px;
-    gap: 8px;
+  .habits-list-container {
+    overflow-x: hidden;
   }
 
-  .col-habit-actions {
-    display: none; /* Accessible in habit edit */
+  .habits-table-header {
+    display: none;
+  }
+
+  .habit-row {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    margin-bottom: 12px;
+  }
+
+  /* Top row of mobile habit card */
+  .col-habit-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Streak & Actions on top right */
+  .col-habit-streak {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  /* 7-Day Matrix spread evenly across card width */
+  .col-habit-days {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    justify-items: center;
   }
 
   .day-dot-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 0.68rem;
+    width: 100%;
+    max-width: 40px;
+    height: 36px;
+    border-radius: var(--radius-xs);
+    font-size: 0.78rem;
+  }
+
+  .col-habit-actions {
+    display: flex !important;
   }
 
   /* Compact meal log cards */
@@ -3409,10 +3451,439 @@ dialog::backdrop {
   .subnav-tab {
     padding: 8px 10px;
     font-size: 0.76rem;
-  }
-
-  dialog {
+  }    dialog {
     width: 95vw;
     margin: auto;
   }
+}
+
+/* ============================================================
+   Smaller Screens < 480px : Extra-compact mobile overrides
+   ============================================================ */
+@media (max-width: 480px) {
+  /* Sidebar stays hidden, bottom nav is full-bleed touch bar */
+  #mobile-bottom-nav {
+    padding: 0 6px;
+    gap: 4px;
+  }
+
+  .mobile-nav-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 4px 8px;
+    font-size: 0.6rem;
+  }
+
+  .mobile-nav-btn .m-icon {
+    font-size: 1rem;
+  }
+
+  /* Top bar: tighter controls for very small screens */
+  .top-header-bar {
+    padding: 10px 12px;
+  }
+
+  .btn-header-action {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
+
+  /* Main content: tighter padding */
+  .views-container {
+    padding: 8px 12px 72px;
+  }
+
+  /* Motivational banner: compact */
+  .motivational-banner {
+    margin: 12px 10px 6px;
+    padding: 14px 16px;
+  }
+
+  .quote-text {
+    font-size: 1rem;
+  }
+
+  /* Stats grid: single column for very small screens */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 12px;
+  }
+
+  .stat-value {
+    font-size: 1.35rem;
+  }
+
+  /* Habits strip: even tighter card */
+  .habits-list-container {
+    padding: 0;
+  }
+
+  .habit-row {
+    gap: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .col-habit-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .col-habit-streak {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-subtle);
+    gap: 4px;
+  }
+
+  .day-dot-btn {
+    width: 100%;
+    max-width: 34px;
+    height: 30px;
+    font-size: 0.7rem;
+  }
+
+  .col-habit-actions {
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+  }
+
+  /* Buttons: smaller touch targets */
+  .btn {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  .btn-sm {
+    padding: 6px 10px;
+    font-size: 0.74rem;
+  }
+
+  /* Modal dialog: full-width, scrollable body */
+  dialog {
+    width: 98vw;
+    padding: 8px;
+  }
+
+  .dialog-body {
+    padding: 16px 14px;
+    max-height: 80vh;
+  }
+
+  /* Form: denser, smaller inputs */
+  .form-input, .form-select, .form-textarea {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  /* Heatmap: single row wrap for narrow screens */
+  .heatmap-grid {
+    grid-template-columns: repeat(15, 1fr);
+  }
+
+  /* Dues row: full-width single column */
+  .due-item-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .due-actions-col {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  /* Meals list: single column rows */
+  .meal-log-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+}
+
+
+/* -------------------------------------------------------------
+   Freemium Pro Gate Modal & Badges
+------------------------------------------------------------- */
+
+
+/* -------------------------------------------------------------
+   Freemium Pro Gate Modal & Badges
+------------------------------------------------------------- */
+.pro-gate-modal {
+  max-width: 540px;
+  width: 92vw;
+  background: #111215;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 0;
+  overflow: hidden;
+  color: var(--text-primary);
+}
+
+.pro-gate-header {
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pro-header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.pro-header-badge [data-lucide] {
+  width: 14px;
+  height: 14px;
+}
+
+.pro-gate-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pro-gate-hero {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.pro-icon-shield {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  color: var(--accent);
+}
+
+.pro-icon-shield [data-lucide] {
+  width: 24px;
+  height: 24px;
+}
+
+.pro-gate-hero h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.pro-gate-sub {
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.pro-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.pro-feature-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pro-feature-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.pro-feature-icon [data-lucide] {
+  width: 15px;
+  height: 15px;
+}
+
+.pro-feature-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pro-feature-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pro-feature-desc {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.pro-pricing-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+}
+
+.pro-pricing-main {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.pro-price-amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pro-price-period {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.pro-price-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.pro-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Dashboard Focus Widget & Scratchpad Widget */
+.dash-focus-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 0;
+}
+
+.dash-timer-ring-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-timer-svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.dash-timer-bg-circle {
+  stroke: rgba(255, 255, 255, 0.06);
+}
+
+.dash-timer-prog-circle {
+  stroke: var(--accent);
+  transition: stroke-dashoffset 0.3s ease;
+}
+
+.dash-timer-center-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-timer-digits {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.dash-timer-mode-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+.dash-timer-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dash-scratchpad-area {
+  width: 100%;
+  min-height: 90px;
+  max-height: 180px;
+  resize: vertical;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.dash-scratchpad-area:focus {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dash-scratchpad-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
 }

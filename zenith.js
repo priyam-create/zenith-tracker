@@ -1059,7 +1059,8 @@ class StorageManager {
         passwordHash: 'demo123', // Demo password
         role: 'Computer Science & Bioengineering Student',
         avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        joinedDate: '2025-09-01'
+        joinedDate: '2025-09-01',
+        isPro: false
       };
       localStorage.setItem(USERS_KEY, JSON.stringify([demoUser]));
       
@@ -1131,6 +1132,26 @@ class StorageManager {
     }
   }
 
+  get isCurrentUserPro() {
+    return Boolean(this.currentUser && this.currentUser.isPro === true);
+  }
+
+  setProStatus(isPro) {
+    if (!this.currentUser) return;
+    this.currentUser.isPro = Boolean(isPro);
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.id === this.currentUser.id);
+    if (idx !== -1) {
+      users[idx].isPro = this.currentUser.isPro;
+      this.saveUsers(users);
+    }
+    if (this.state && this.state.user) {
+      this.state.user.isPro = this.currentUser.isPro;
+      this.saveState();
+    }
+    this.notifyListeners();
+  }
+
   // --- Auth Methods ---
   login(email, password) {
     const users = this.getUsers();
@@ -1169,7 +1190,8 @@ class StorageManager {
       passwordHash: password,
       role: 'Lifelong Learner',
       avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80',
-      joinedDate: new Date().toISOString().split('T')[0]
+      joinedDate: new Date().toISOString().split('T')[0],
+      isPro: false
     };
 
     users.push(newUser);
@@ -2144,7 +2166,11 @@ class NutritionTracker {
       this.app.openFoodModal('search');
     });
     container.querySelector('#btn-quick-photo-food')?.addEventListener('click', () => {
-      this.app.openFoodModal('photo');
+      if (storage.isCurrentUserPro) {
+        this.app.openFoodModal('photo');
+      } else {
+        this.app.openProGateModal('AI Photo Meal Estimation');
+      }
     });
     container.querySelector('#btn-quick-manual-food')?.addEventListener('click', () => {
       this.app.openFoodModal('manual');
@@ -3368,6 +3394,50 @@ class ZenithApp {
               </div>
             </div>
           ` : ''}
+
+          <!-- Widget: Focus Timer (Circular SVG Countdown) -->
+          <div class="dash-widget glass-panel" id="dash-widget-focus-timer">
+            <div class="widget-header">
+              <div>
+                <h3 class="widget-title">Focus Timer</h3>
+                <p class="widget-sub" id="dash-timer-sub">Interval session</p>
+              </div>
+              <button class="btn-subtle-link" id="dash-link-full-timer">Full Mode →</button>
+            </div>
+            <div class="dash-focus-widget">
+              <div class="dash-timer-ring-wrapper">
+                <svg class="dash-timer-svg" viewBox="0 0 100 100">
+                  <circle class="dash-timer-bg-circle" cx="50" cy="50" r="42" fill="none" stroke-width="6" />
+                  <circle class="dash-timer-prog-circle" id="dash-timer-circle" cx="50" cy="50" r="42" fill="none" stroke-width="6" stroke-linecap="round" stroke-dasharray="263.89" stroke-dashoffset="0" />
+                </svg>
+                <div class="dash-timer-center-text">
+                  <span class="dash-timer-digits" id="dash-timer-digits">25:00</span>
+                  <span class="dash-timer-mode-tag" id="dash-timer-tag">FOCUS</span>
+                </div>
+              </div>
+              <div class="dash-timer-actions">
+                <button class="btn btn-primary btn-sm" id="dash-timer-btn-toggle">Start</button>
+                <button class="btn btn-secondary btn-sm" id="dash-timer-btn-reset">Reset</button>
+                <button class="btn btn-outline btn-sm" id="dash-timer-btn-mode">Break</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Widget: Brain Dump (Auto-saving scratchpad) -->
+          <div class="dash-widget glass-panel" id="dash-widget-braindump">
+            <div class="widget-header">
+              <div>
+                <h3 class="widget-title">Quick Scratchpad</h3>
+                <p class="widget-sub">Auto-saved cognitive dump</p>
+              </div>
+              <button class="btn-subtle-link" id="dash-link-full-dump">Full View →</button>
+            </div>
+            <textarea id="dash-braindump-input" class="dash-scratchpad-area" placeholder="Jot a thought, command, or transient note..."></textarea>
+            <div class="dash-scratchpad-footer">
+              <span id="dash-braindump-counter">0 words</span>
+              <button class="btn-subtle-link" id="dash-braindump-clear" style="font-size: 0.72rem;">Clear</button>
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -3393,6 +3463,13 @@ class ZenithApp {
 
     // Sub-links
     container.querySelector('#link-view-all-habits')?.addEventListener('click', () => this.switchView('habits'));
+    container.querySelector('#btn-advanced-analytics')?.addEventListener('click', () => {
+      if (storage.isCurrentUserPro) {
+        this.showToast('Advanced Analytics dashboard coming soon!', 'info');
+      } else {
+        this.openProGateModal('Advanced Analytics');
+      }
+    });
     container.querySelector('#link-view-all-nutrition')?.addEventListener('click', () => this.switchView('nutrition'));
     container.querySelector('#link-view-all-deadlines')?.addEventListener('click', () => {
       this.switchView('academics');
@@ -3400,11 +3477,124 @@ class ZenithApp {
       this.academics.render();
     });
 
+    // Navigation to full mini-tools from dashboard
+    container.querySelector('#dash-link-full-timer')?.addEventListener('click', () => this.switchView('focus-timer'));
+    container.querySelector('#dash-link-full-dump')?.addEventListener('click', () => this.switchView('brain-dump'));
+
+    // Dashboard Brain Dump Scratchpad wiring
+    const dashDumpInput = container.querySelector('#dash-braindump-input');
+    const dashDumpCounter = container.querySelector('#dash-braindump-counter');
+    if (dashDumpInput) {
+      dashDumpInput.value = localStorage.getItem('zenith_braindump_content') || '';
+      const updateCount = () => {
+        const text = dashDumpInput.value.trim();
+        const w = text ? text.split(/\s+/).length : 0;
+        if (dashDumpCounter) dashDumpCounter.textContent = `${w} words`;
+      };
+      updateCount();
+      dashDumpInput.addEventListener('input', () => {
+        localStorage.setItem('zenith_braindump_content', dashDumpInput.value);
+        updateCount();
+      });
+      container.querySelector('#dash-braindump-clear')?.addEventListener('click', () => {
+        dashDumpInput.value = '';
+        localStorage.removeItem('zenith_braindump_content');
+        updateCount();
+        this.showToast('Scratchpad cleared', 'info');
+      });
+    }
+
+    // Dashboard Circular Focus Timer wiring
+    if (!this.timerState) {
+      this.timerState = {
+        mode: 'focus',
+        totalSeconds: 25 * 60,
+        remainingSeconds: 25 * 60,
+        isRunning: false,
+        intervalId: null
+      };
+    }
+    const timerCircle = container.querySelector('#dash-timer-circle');
+    const timerDigits = container.querySelector('#dash-timer-digits');
+    const timerTag = container.querySelector('#dash-timer-tag');
+    const timerToggleBtn = container.querySelector('#dash-timer-btn-toggle');
+    const timerResetBtn = container.querySelector('#dash-timer-btn-reset');
+    const timerModeBtn = container.querySelector('#dash-timer-btn-mode');
+    const circumference = 2 * Math.PI * 42; // ~263.89
+
+    const updateTimerUI = () => {
+      const m = Math.floor(this.timerState.remainingSeconds / 60).toString().padStart(2, '0');
+      const s = (this.timerState.remainingSeconds % 60).toString().padStart(2, '0');
+      if (timerDigits) timerDigits.textContent = `${m}:${s}`;
+      if (timerTag) timerTag.textContent = this.timerState.mode.toUpperCase();
+      if (timerToggleBtn) timerToggleBtn.textContent = this.timerState.isRunning ? 'Pause' : 'Start';
+      if (timerModeBtn) timerModeBtn.textContent = this.timerState.mode === 'focus' ? 'Break' : 'Focus';
+      if (timerCircle) {
+        const progress = (this.timerState.totalSeconds - this.timerState.remainingSeconds) / this.timerState.totalSeconds;
+        const offset = circumference * progress;
+        timerCircle.style.strokeDashoffset = offset.toString();
+      }
+    };
+    updateTimerUI();
+
+    const tickTimer = () => {
+      if (this.timerState.remainingSeconds > 0) {
+        this.timerState.remainingSeconds--;
+        updateTimerUI();
+      } else {
+        clearInterval(this.timerState.intervalId);
+        this.timerState.isRunning = false;
+        sound.playChime();
+        this.showToast(`${this.timerState.mode === 'focus' ? 'Focus session' : 'Break'} complete!`, 'success');
+        updateTimerUI();
+      }
+    };
+
+    timerToggleBtn?.addEventListener('click', () => {
+      if (this.timerState.isRunning) {
+        clearInterval(this.timerState.intervalId);
+        this.timerState.isRunning = false;
+        updateTimerUI();
+      } else {
+        this.timerState.isRunning = true;
+        this.timerState.intervalId = setInterval(tickTimer, 1000);
+        updateTimerUI();
+      }
+    });
+
+    timerResetBtn?.addEventListener('click', () => {
+      clearInterval(this.timerState.intervalId);
+      this.timerState.isRunning = false;
+      this.timerState.remainingSeconds = this.timerState.totalSeconds;
+      updateTimerUI();
+    });
+
+    timerModeBtn?.addEventListener('click', () => {
+      clearInterval(this.timerState.intervalId);
+      this.timerState.isRunning = false;
+      if (this.timerState.mode === 'focus') {
+        this.timerState.mode = 'short';
+        this.timerState.totalSeconds = 5 * 60;
+        this.timerState.remainingSeconds = 5 * 60;
+      } else {
+        this.timerState.mode = 'focus';
+        this.timerState.totalSeconds = 25 * 60;
+        this.timerState.remainingSeconds = 25 * 60;
+      }
+      updateTimerUI();
+    });
+
     // Quick buttons
     container.querySelector('#btn-dash-quick-log')?.addEventListener('click', () => this.openFoodModal('search'));
     container.querySelector('#btn-dash-new-habit')?.addEventListener('click', () => this.openHabitModal());
     container.querySelector('#dash-btn-search-food')?.addEventListener('click', () => this.openFoodModal('search'));
-    container.querySelector('#dash-btn-photo-food')?.addEventListener('click', () => this.openFoodModal('photo'));
+    container.querySelector('#dash-btn-photo-food')?.addEventListener('click', () => {
+      if (storage.isCurrentUserPro) {
+        this.openFoodModal('photo');
+      } else {
+        this.openProGateModal('AI Photo Meal Estimation');
+      }
+    });
 
     // Habit check-in from dashboard
     container.querySelectorAll('.dash-habit-item .habit-quick-check-btn').forEach(btn => {
@@ -4143,6 +4333,10 @@ class ZenithApp {
       const fileInput = document.getElementById('note-attachment-file');
       let attachment = null;
       if (fileInput?.files && fileInput.files[0]) {
+        if (!storage.isCurrentUserPro) {
+          this.openProGateModal('Unlimited Note Attachments');
+          return;
+        }
         const file = fileInput.files[0];
         const isPdf = file.name.endsWith('.pdf');
         attachment = {
@@ -4314,6 +4508,18 @@ class ZenithApp {
         this.showToast(`Reset link simulated for ${email}. (Demo password is "demo123")`, 'info');
       }
     });
+
+    // --- Pro Gate Dialog ---
+    const proDialog = document.getElementById('pro-gate-dialog');
+    if (proDialog) {
+      proDialog.querySelectorAll('.btn-close-dialog').forEach(btn => {
+        btn.addEventListener('click', () => proDialog.close());
+      });
+      proDialog.querySelector('#btn-pro-checkout')?.addEventListener('click', () => {
+        proDialog.close();
+        this.showToast('Stripe checkout staged. Configure STRIPE_SECRET_KEY in .env to enable billing.', 'info');
+      });
+    }
   }
 
 
@@ -4834,7 +5040,16 @@ class ZenithApp {
   }
 
   // --- Toast Notification System ---
-  showToast(message, type = 'info') {
+  // --- Freemium Pro Gate ---
+  openProGateModal(featureName = 'This feature') {
+    const dialog = document.getElementById('pro-gate-dialog');
+    if (!dialog) return;
+    const featureEl = dialog.querySelector('#pro-gate-feature-name');
+    if (featureEl) featureEl.textContent = featureName;
+    dialog.showModal();
+  }
+
+    showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
     if (!container) return;
 
